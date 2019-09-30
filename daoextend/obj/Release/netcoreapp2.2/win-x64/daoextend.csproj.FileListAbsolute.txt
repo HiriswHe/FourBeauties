@@ -1,0 +1,8 @@
+F:\Work\mtscitech\Pechoin\Git2\panpassmigrationmt\Mt.PanPassMigration\daoextend\bin\Release\netcoreapp2.2\win-x64\daoextend.deps.json
+F:\Work\mtscitech\Pechoin\Git2\panpassmigrationmt\Mt.PanPassMigration\daoextend\bin\Release\netcoreapp2.2\win-x64\daoextend.dll
+F:\Work\mtscitech\Pechoin\Git2\panpassmigrationmt\Mt.PanPassMigration\daoextend\bin\Release\netcoreapp2.2\win-x64\daoextend.pdb
+F:\Work\mtscitech\Pechoin\Git2\panpassmigrationmt\Mt.PanPassMigration\daoextend\obj\Release\netcoreapp2.2\win-x64\daoextend.csproj.CoreCompileInputs.cache
+F:\Work\mtscitech\Pechoin\Git2\panpassmigrationmt\Mt.PanPassMigration\daoextend\obj\Release\netcoreapp2.2\win-x64\daoextend.AssemblyInfoInputs.cache
+F:\Work\mtscitech\Pechoin\Git2\panpassmigrationmt\Mt.PanPassMigration\daoextend\obj\Release\netcoreapp2.2\win-x64\daoextend.AssemblyInfo.cs
+F:\Work\mtscitech\Pechoin\Git2\panpassmigrationmt\Mt.PanPassMigration\daoextend\obj\Release\netcoreapp2.2\win-x64\daoextend.dll
+F:\Work\mtscitech\Pechoin\Git2\panpassmigrationmt\Mt.PanPassMigration\daoextend\obj\Release\netcoreapp2.2\win-x64\daoextend.pdb

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>api.domain.common</name>
+    </assembly>
+    <members>
+        <member name="T:api.domain.common.enums.EPackageLevel">
+            <summary>
+            码的包装级别
+            </summary>
+        </member>
+        <member name="F:api.domain.common.enums.EPackageLevel.PackageLevelOne">
+            <summary>
+            一级包装
+            </summary>
+        </member>
+        <member name="F:api.domain.common.enums.EPackageLevel.PackageLevelTwo">
+            <summary>
+            二级包装
+            </summary>
+        </member>
+        <member name="F:api.domain.common.enums.EPackageLevel.PackageLevelThree">
+            <summary>
+            三级包装
+            </summary>
+        </member>
+        <member name="F:api.domain.common.enums.EPackageLevel.PackageLevelFour">
+            <summary>
+            四级包装
+            </summary>
+        </member>
+        <member name="T:api.domain.common.enmuns.EQrcodeOption">
+            <summary>
+            配送仓退换货
+            </summary>
+        </member>
+        <member name="F:api.domain.common.enmuns.EQrcodeOption.ReturnGoods">
+            <summary>
+            退货
+            </summary>
+        </member>
+        <member name="F:api.domain.common.enmuns.EQrcodeOption.Barter">
+            <summary>
+            换货
+            </summary>
+        </member>
+        <member name="T:api.domain.common.RabbitMqParam">
+            <summary>
+            规则属性
+            </summary>
+        </member>
+        <member name="P:api.domain.common.RabbitMqParam.Id">
+            <summary>
+            生码单号
+            </summary>
+        </member>
+        <member name="P:api.domain.common.RabbitMqParam.callbackName">
+            <summary>
+            Code Generator Callback Name
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,8 @@
+F:\Work\mtscitech\Pechoin\Git2\mq.service\Interfaces\bin\Debug\netcoreapp2.2\mq.orm.Interfaces.deps.json
+F:\Work\mtscitech\Pechoin\Git2\mq.service\Interfaces\bin\Debug\netcoreapp2.2\mq.orm.Interfaces.dll
+F:\Work\mtscitech\Pechoin\Git2\mq.service\Interfaces\bin\Debug\netcoreapp2.2\mq.orm.Interfaces.pdb
+F:\Work\mtscitech\Pechoin\Git2\mq.service\Interfaces\obj\Debug\netcoreapp2.2\mq.orm.Interfaces.csproj.CoreCompileInputs.cache
+F:\Work\mtscitech\Pechoin\Git2\mq.service\Interfaces\obj\Debug\netcoreapp2.2\mq.orm.Interfaces.AssemblyInfoInputs.cache
+F:\Work\mtscitech\Pechoin\Git2\mq.service\Interfaces\obj\Debug\netcoreapp2.2\mq.orm.Interfaces.AssemblyInfo.cs
+F:\Work\mtscitech\Pechoin\Git2\mq.service\Interfaces\obj\Debug\netcoreapp2.2\mq.orm.Interfaces.dll
+F:\Work\mtscitech\Pechoin\Git2\mq.service\Interfaces\obj\Debug\netcoreapp2.2\mq.orm.Interfaces.pdb

@@ -1,0 +1,1526 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>api.utils</name>
+    </assembly>
+    <members>
+        <member name="T:api.utils.AppSetting">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:api.utils.AppSetting.GetInstance">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.AppSetting.GetConfig(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="T:api.utils.Cash.RedisConnectionHelp">
+            <summary>
+            ConnectionMultiplexer对象管理帮助类
+            </summary>
+        </member>
+        <member name="P:api.utils.Cash.RedisConnectionHelp.Instance">
+            <summary>
+            单例获取
+            </summary>
+        </member>
+        <member name="M:api.utils.Cash.RedisConnectionHelp.GetConnectionMultiplexer(System.String)">
+            <summary>
+            缓存获取
+            </summary>
+            <param name="connectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisConnectionHelp.MuxerConfigurationChanged(System.Object,StackExchange.Redis.EndPointEventArgs)">
+            <summary>
+            配置更改时
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:api.utils.Cash.RedisConnectionHelp.MuxerErrorMessage(System.Object,StackExchange.Redis.RedisErrorEventArgs)">
+            <summary>
+            发生错误时
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:api.utils.Cash.RedisConnectionHelp.MuxerConnectionRestored(System.Object,StackExchange.Redis.ConnectionFailedEventArgs)">
+            <summary>
+            重新建立连接之前的错误
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:api.utils.Cash.RedisConnectionHelp.MuxerConnectionFailed(System.Object,StackExchange.Redis.ConnectionFailedEventArgs)">
+            <summary>
+            连接失败 ， 如果重新连接成功你将不会收到这个通知
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:api.utils.Cash.RedisConnectionHelp.MuxerHashSlotMoved(System.Object,StackExchange.Redis.HashSlotMovedEventArgs)">
+            <summary>
+            更改集群
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:api.utils.Cash.RedisConnectionHelp.MuxerInternalError(System.Object,StackExchange.Redis.InternalErrorEventArgs)">
+            <summary>
+            redis类库错误
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:api.utils.Cash.RedisHelper">
+            <summary>
+            Redis辅助类
+            </summary>
+        </member>
+        <member name="F:api.utils.Cash.RedisHelper.ConnectionString">
+            <summary>
+            连接字符串
+            </summary>
+        </member>
+        <member name="F:api.utils.Cash.RedisHelper._connMultiplexer">
+            <summary>
+            redis 连接对象
+            </summary>
+        </member>
+        <member name="P:api.utils.Cash.RedisHelper.DefaultKey">
+            <summary>
+            默认的key值（用来当作RedisKey的前缀）【此部分为自行修改的，无意义】
+            </summary>
+        </member>
+        <member name="F:api.utils.Cash.RedisHelper.Locker">
+            <summary>
+            锁
+            </summary>
+        </member>
+        <member name="F:api.utils.Cash.RedisHelper._db">
+            <summary>
+            数据库访问对象
+            </summary>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.GetConnectionRedisMultiplexer">
+            <summary>
+            采用双重锁单例模式，保证数据访问对象有且仅有一个
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.GetTransaction">
+            <summary>
+            添加事务处理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.#cctor">
+            <summary>
+            静态的构造函数,
+            构造函数是属于类的，而不是属于实例的
+            就是说这个构造函数只会被执行一次。也就是在创建第一个实例或引用任何静态成员之前，由.NET自动调用。
+            </summary>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.#ctor(System.Int32)">
+            <summary>
+            重载构造器
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.AddKeyPrefix(System.String)">
+            <summary>
+            添加 key 的前缀
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.Serialize(System.Object)">
+            <summary>
+            序列化
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.Deserialize``1(System.Byte[])">
+            <summary>
+            反序列化
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.StringSet(System.String,System.String,System.Nullable{System.TimeSpan})">
+            <summary>
+            设置key，并保存字符串（如果key 已存在，则覆盖）
+            </summary>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <param name="expried"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.StringSet(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{StackExchange.Redis.RedisKey,StackExchange.Redis.RedisValue}})">
+            <summary>
+            保存多个key-value
+            </summary>
+            <param name="keyValuePairs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.StringGet(System.String,System.Nullable{System.TimeSpan})">
+            <summary>
+            获取字符串
+            </summary>
+            <param name="redisKey"></param>
+            <param name="expired"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.StringSet``1(System.String,``0,System.Nullable{System.TimeSpan})">
+            <summary>
+            存储一个对象，该对象会被序列化存储
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <param name="expired"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.StringSet``1(System.String,System.Nullable{System.TimeSpan})">
+            <summary>
+            获取一个对象(会进行反序列化)
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <param name="expired"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.StringSetAsync(System.String,System.String,System.Nullable{System.TimeSpan})">
+            <summary>
+            保存一个字符串值
+            </summary>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <param name="expired"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.StringSetAsync(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{StackExchange.Redis.RedisKey,StackExchange.Redis.RedisValue}})">
+            <summary>
+            保存一个字符串值
+            </summary>
+            <param name="keyValuePairs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.StringGetAsync(System.String,System.String,System.Nullable{System.TimeSpan})">
+            <summary>
+            获取单个值
+            </summary>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <param name="expired"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.StringSetAsync``1(System.String,System.String,System.Nullable{System.TimeSpan})">
+            <summary>
+            存储一个对象（该对象会被序列化保存）
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <param name="expired"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.StringGetAsync``1(System.String,System.String,System.Nullable{System.TimeSpan})">
+            <summary>
+            获取一个对象（反序列化）
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <param name="expired"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashExist(System.String,System.String)">
+            <summary>
+            判断字段是否在hash中
+            </summary>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashDelete(System.String,System.String)">
+            <summary>
+            从hash 中删除字段
+            </summary>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashDelete(System.String,System.Collections.Generic.IEnumerable{StackExchange.Redis.RedisValue})">
+            <summary>
+            从hash中移除指定字段
+            </summary>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashSet(System.String,System.String,System.String)">
+            <summary>
+            在hash中设定值
+            </summary>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashGet(System.String,System.String)">
+            <summary>
+            从Hash 中获取值
+            </summary>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashGet(System.String,StackExchange.Redis.RedisValue[])">
+            <summary>
+            从Hash 中获取值
+            </summary>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashKeys(System.String)">
+            <summary>
+            从hash 返回所有的key值
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashValues(System.String)">
+            <summary>
+            根据key返回hash中的值
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashSet``1(System.String,System.String,``0)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashGet``1(System.String,System.String)">
+            <summary>
+            在hash 中获取值 （反序列化）
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashExistsAsync(System.String,System.String)">
+            <summary>
+            判断字段是否存在hash 中
+            </summary>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashDeleteAsync(System.String,System.String)">
+            <summary>
+            从hash中移除指定字段
+            </summary>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashDeleteAsync(System.String,System.Collections.Generic.IEnumerable{StackExchange.Redis.RedisValue})">
+            <summary>
+            从hash中移除指定字段
+            </summary>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashSetAsync(System.String,System.String,System.String)">
+            <summary>
+            在hash 设置值
+            </summary>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashSetAsync(System.String,System.Collections.Generic.IEnumerable{StackExchange.Redis.HashEntry})">
+            <summary>
+            在hash 中设定值
+            </summary>
+            <param name="redisKey"></param>
+            <param name="hashFields"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashGetAsync(System.String,System.String)">
+            <summary>
+            在hash 中设定值
+            </summary>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashGetAsync(System.String,StackExchange.Redis.RedisValue[],System.String)">
+            <summary>
+            在hash 中获取值
+            </summary>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashKeysAsync(System.String)">
+            <summary>
+            从hash返回所有的字段值
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashValuesAsync(System.String)">
+            <summary>
+            返回hash中所有的值
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashSetAsync``1(System.String,System.String,``0)">
+            <summary>
+            在hash 中设定值（序列化）
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.HashGetAsync``1(System.String,System.String)">
+            <summary>
+            在hash中获取值（反序列化）
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <param name="hashField"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListLeftPop(System.String)">
+            <summary>
+            移除并返回key所对应列表的第一个元素
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListRightPop(System.String)">
+            <summary>
+            移除并返回key所对应列表的最后一个元素
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListRemove(System.String,System.String)">
+            <summary>
+            移除指定key及key所对应的元素
+            </summary>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListRightPush(System.String,System.String)">
+            <summary>
+            在列表尾部插入值，如果键不存在，先创建再插入值
+            </summary>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListLeftPush(System.String,System.String)">
+            <summary>
+            在列表头部插入值，如果键不存在，先创建再插入值
+            </summary>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListLength(System.String)">
+            <summary>
+            返回列表上该键的长度，如果不存在，返回0
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListRange(System.String)">
+            <summary>
+            返回在该列表上键所对应的元素
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListLeftPop``1(System.String)">
+            <summary>
+            移除并返回存储在该键列表的第一个元素
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListRightPop``1(System.String)">
+            <summary>
+            移除并返回该列表上的最后一个元素
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListRightPush``1(System.String,``0)">
+            <summary>
+            在列表尾部插入值，如果键不存在，先创建再插入值
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListLeftPush``1(System.String,``0)">
+            <summary>
+            在列表头部插入值，如果键不存在，创建后插入值
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListLeftPopAsync(System.String)">
+            <summary>
+            移除并返回存储在该键列表的第一个元素
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListRightPopAsync(System.String)">
+            <summary>
+            移除并返回存储在该键列表的最后一个元素
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListRemoveAsync(System.String,System.String)">
+            <summary>
+            移除列表指定键上与值相同的元素
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListRightPushAsync(System.String,System.String)">
+            <summary>
+            在列表尾部差入值，如果键不存在，先创建后插入
+            </summary>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListLeftPushAsync(System.String,System.String)">
+            <summary>
+            在列表头部插入值，如果键不存在，先创建后插入
+            </summary>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListLengthAsync(System.String)">
+            <summary>
+            返回列表上的长度，如果不存在，返回0
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListRangeAsync(System.String)">
+            <summary>
+            返回在列表上键对应的元素
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListLeftPopAsync``1(System.String)">
+            <summary>
+            移除并返回存储在key对应列表的第一个元素
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListRightPopAsync``1(System.String)">
+            <summary>
+            移除并返回存储在key 对应列表的最后一个元素
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListRightPushAsync``1(System.String,System.String)">
+            <summary>
+            在列表尾部插入值，如果值不存在，先创建后写入值
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ListLeftPushAsync``1(System.String,System.String)">
+            <summary>
+            在列表头部插入值，如果值不存在，先创建后写入值
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <param name="redisValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.SortedSetAdd(System.String,System.String,System.Double)">
+            <summary>
+            sortedset 新增
+            </summary>
+            <param name="redisKey"></param>
+            <param name="member"></param>
+            <param name="score"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.SortedSetRangeByRank(System.String)">
+            <summary>
+            在有序集合中返回指定范围的元素，默认情况下由低到高
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.SortedSetLength(System.String)">
+            <summary>
+            返回有序集合的个数
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.SortedSetLength(System.String,System.String)">
+            <summary>
+            返回有序集合的元素个数
+            </summary>
+            <param name="redisKey"></param>
+            <param name="member"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.SortedSetAdd``1(System.String,``0,System.Double)">
+            <summary>
+             sorted set Add
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <param name="member"></param>
+            <param name="score"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.SortedSetAddAsync(System.String,System.String,System.Double)">
+            <summary>
+            sorted set add
+            </summary>
+            <param name="redisKey"></param>
+            <param name="member"></param>
+            <param name="score"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.SortedSetRangeByRankAsync(System.String)">
+            <summary>
+            在有序集合中返回指定范围的元素，默认情况下由低到高
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.SortedSetLengthAsync(System.String)">
+            <summary>
+            返回有序集合的元素个数
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.SortedSetRemoveAsync(System.String,System.String)">
+            <summary>
+            返回有序集合的元素个数
+            </summary>
+            <param name="redisKey"></param>
+            <param name="member"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.SortedSetAddAsync``1(System.String,``0,System.Double)">
+            <summary>
+            SortedSet 新增
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisKey"></param>
+            <param name="member"></param>
+            <param name="score"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.KeyDelete(System.String)">
+            <summary>
+            移除指定key
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.KeyDelete(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            删除指定key
+            </summary>
+            <param name="redisKeys"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.KeyExists(System.String)">
+            <summary>
+            检验key是否存在
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.KeyReName(System.String,System.String)">
+            <summary>
+            重命名key
+            </summary>
+            <param name="oldKeyName"></param>
+            <param name="newKeyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.KeyExpire(System.String,System.Nullable{System.TimeSpan})">
+            <summary>
+            设置key 的过期时间
+            </summary>
+            <param name="redisKey"></param>
+            <param name="expired"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.KeyDeleteAsync(System.String)">
+            <summary>
+            移除指定的key
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.KeyDeleteAsync(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            删除指定的key
+            </summary>
+            <param name="redisKeys"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.KeyExistsAsync(System.String)">
+            <summary>
+            检验key 是否存在
+            </summary>
+            <param name="redisKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.KeyRenameAsync(System.String,System.String)">
+            <summary>
+            重命名key
+            </summary>
+            <param name="redisKey"></param>
+            <param name="redisNewKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.KeyExpireAsync(System.String,System.Nullable{System.TimeSpan})">
+            <summary>
+            设置 key 时间
+            </summary>
+            <param name="redisKey"></param>
+            <param name="expired"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.Subscribe(StackExchange.Redis.RedisChannel,System.Action{StackExchange.Redis.RedisChannel,StackExchange.Redis.RedisValue})">
+            <summary>
+            订阅
+            </summary>
+            <param name="channel">频道</param>
+            <param name="handle">事件</param>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.Publish(StackExchange.Redis.RedisChannel,StackExchange.Redis.RedisValue)">
+            <summary>
+            发布
+            </summary>
+            <param name="channel"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.Publish``1(StackExchange.Redis.RedisChannel,``0)">
+            <summary>
+            发布（使用序列化）
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="channel"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.SubscribeAsync(StackExchange.Redis.RedisChannel,System.Action{StackExchange.Redis.RedisChannel,StackExchange.Redis.RedisValue})">
+            <summary>
+            订阅
+            </summary>
+            <param name="redisChannel"></param>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.PublishAsync(StackExchange.Redis.RedisChannel,StackExchange.Redis.RedisValue)">
+            <summary>
+            发布
+            </summary>
+            <param name="redisChannel"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.PublishAsync``1(StackExchange.Redis.RedisChannel,``0)">
+            <summary>
+            发布（使用序列化）
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="redisChannel"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.RegisterEvent">
+            <summary>
+            注册事件
+            </summary>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ConnMultiplexer_ConfigurationChangedBroadcast(System.Object,StackExchange.Redis.EndPointEventArgs)">
+            <summary>
+            重新配置广播时(主从同步更改)
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ConnMultiplexer_InternalError(System.Object,StackExchange.Redis.InternalErrorEventArgs)">
+            <summary>
+            发生内部错误时(调试用)
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ConnMultiplexer_HashSlotMoved(System.Object,StackExchange.Redis.HashSlotMovedEventArgs)">
+            <summary>
+            更改集群时
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ConnMultiplexer_ConfigurationChanged(System.Object,StackExchange.Redis.EndPointEventArgs)">
+            <summary>
+            配置更改时
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ConnMultiplexer_ErrorMessage(System.Object,StackExchange.Redis.RedisErrorEventArgs)">
+            <summary>
+            发生错误时
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ConnMultiplexer_ConnectionFailed(System.Object,StackExchange.Redis.ConnectionFailedEventArgs)">
+            <summary>
+            物理连接失败时
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:api.utils.Cash.RedisHelper.ConnMultiplexer_ConnectionRestored(System.Object,StackExchange.Redis.ConnectionFailedEventArgs)">
+            <summary>
+            建立物理连接时
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:api.utils.common.DateTimeUtility">
+            <summary>
+            时间戳和日期的转化
+            </summary>
+        </member>
+        <member name="M:api.utils.common.DateTimeUtility.ConvertToTimeStamp(System.DateTime)">
+            <summary>
+            日期转换为时间戳（时间戳单位秒）
+            </summary>
+            <param name="time"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.common.DateTimeUtility.ConvertToDateTime(System.Int64)">
+            <summary>
+            时间戳转换为日期（时间戳单位秒）
+            </summary>
+            <param name="timeStamp"></param>
+            <returns></returns>
+        </member>
+        <member name="T:api.utils.common.DateValidationAttribute">
+            <summary>
+            YYYY-MM-DD格式
+            </summary>
+        </member>
+        <member name="M:api.utils.common.DateValidationAttribute.FormatErrorMessage(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.common.DateValidationAttribute.IsValid(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:api.utils.common.Extension">
+            <summary>
+            Extens Methods In this Class
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:api.utils.common.Extension.SplitListByMaxCount``1(System.Collections.Generic.List{``0},System.Int32)" -->
+        <member name="T:api.utils.common.StringUtils">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:api.utils.common.StringUtils.IsDate(System.String)">
+            <summary>
+            是否为日期型字符串
+            </summary>
+            <param name="str">日期字符串(2008-05-08)</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.common.StringUtils.IsTime(System.String)">
+            <summary>
+            是否为时间型字符串
+            </summary>
+            <param name="str">时间字符串(15:00:00)</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.common.StringUtils.IsInt(System.String)">
+            <summary>
+            是否是整数
+            </summary>
+            <param name="StrSource"></param>
+            <returns></returns>
+        </member>
+        <member name="T:api.utils.InterfaceCallHelp">
+            <summary>
+            接口调用辅助类
+            </summary>
+        </member>
+        <member name="M:api.utils.InterfaceCallHelp.HttpPostService(System.String,System.Object,System.String,System.String,System.Action{System.Object},System.Object)">
+             <summary>
+             POST调接口
+             </summary>
+             <param name="url">接口地址</param>
+             <param name="jsonParameter">序列化过来的json数据</param>
+            <param name="objectVerify"></param>
+            <param name="appKey"></param>
+             <param name="action"></param>
+             <param name="actionObject"></param>
+             <returns></returns>
+        </member>
+        <member name="T:api.utils.MD5Helper">
+            <summary>
+            MD5 Dealing Helper
+            </summary>
+        </member>
+        <member name="M:api.utils.MD5Helper.GetMD5HashFromFile(System.String)">
+            <summary>
+            Getting File MD5
+            </summary>
+            <param name="filename">File Path Name</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.MD5Helper.GetMD5HashString(System.String)">
+            <summary>
+            Getting a String 's MD5 By UTF8
+            </summary>
+            <param name="sourceString">String Source Value</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.MD5Helper.GetMD5HashString(System.Text.Encoding,System.String)">
+            <summary>
+            Getting a String 's MD5 By UTF8
+            </summary>
+            <param name="encode">Encoding UTF8</param>
+            <param name="sourceString">String Source Value</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.MD5Helper.GetMd5String16D(System.String)">
+            <summary>
+            16 bit Upper
+            </summary>
+            <param name="ConvertString">Need Convert String</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.MD5Helper.GetMd5String16X(System.String)">
+            <summary>
+            16 bit Lower
+            </summary>
+            <param name="ConvertString">Need Convert String</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.MD5Helper.GetMd5String32D(System.String)">
+            <summary>
+            32 bit Upper
+            </summary>
+            <param name="ConvertString">Need Convert String</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.MD5Helper.GetMd5String32X(System.String)">
+            <summary>
+            32 bit Lower
+            </summary>
+            <param name="ConvertString">Need Convert String</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.MD5Helper.GetMD5Content(System.Object,System.Collections.Generic.KeyValuePair{System.String,System.Object}[])">
+            <summary>
+            MD5 加密 不加密集合内容
+            </summary>
+            <param name="obj">加密对象</param>
+            <param name="pairs">需要加密的集合内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.MD5Helper.Md5Encrypt(System.String)">
+            <summary>
+            MD5加密
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="T:api.utils.ModelHandler`1">
+            <summary>
+            DataTable与实体类互相转换
+            </summary>
+            <typeparam name="T">实体类</typeparam>
+        </member>
+        <member name="M:api.utils.ModelHandler`1.FillModel(System.Data.DataSet)">
+            <summary>
+            填充对象列表：用DataSet的第一个表填充实体类
+            </summary>
+            <param name="ds">DataSet</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.ModelHandler`1.FillModel(System.Data.DataSet,System.Int32)">
+            <summary>  
+            填充对象列表：用DataSet的第index个表填充实体类
+            </summary>  
+        </member>
+        <member name="M:api.utils.ModelHandler`1.FillModel(System.Data.DataTable)">
+            <summary>  
+            填充对象列表：用DataTable填充实体类
+            </summary>  
+        </member>
+        <member name="M:api.utils.ModelHandler`1.FillModel(System.Data.DataRow)">
+            <summary>  
+            填充对象：用DataRow填充实体类
+            </summary>  
+        </member>
+        <member name="M:api.utils.ModelHandler`1.FillDataSet(System.Collections.Generic.List{`0})">
+            <summary>
+            实体类转换成DataSet
+            </summary>
+            <param name="modelList">实体类列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.ModelHandler`1.FillDataTable(System.Collections.Generic.List{`0})">
+            <summary>
+            实体类转换成DataTable
+            </summary>
+            <param name="modelList">实体类列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.ModelHandler`1.CreateData(`0)">
+            <summary>
+            根据实体类得到表结构
+            </summary>
+            <param name="model">实体类</param>
+            <returns></returns>
+        </member>
+        <member name="T:api.utils.PagedList`1">
+            <summary>
+            分页辅助类
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:api.utils.PagedList`1.PageIndex">
+            <summary>
+            当前页码
+            </summary>
+        </member>
+        <member name="P:api.utils.PagedList`1.PageSize">
+            <summary>
+            一页多少条
+            </summary>
+        </member>
+        <member name="P:api.utils.PagedList`1.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:api.utils.PagedList`1.TotalPages">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="P:api.utils.PagedList`1.PageData">
+            <summary>
+            当前页数据
+            </summary>
+        </member>
+        <member name="P:api.utils.PagedList`1.HasPreviousPage">
+            <summary>
+            是否有上一页
+            </summary>
+        </member>
+        <member name="P:api.utils.PagedList`1.HasNextPage">
+            <summary>
+            是否有下一页
+            </summary>
+        </member>
+        <member name="M:api.utils.PagedList`1.#ctor(System.Linq.IQueryable{`0},System.Int32,System.Int32)">
+            <summary>
+            获取IQueryable数据分页返回
+            </summary>
+            <param name="source"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+        </member>
+        <member name="M:api.utils.PagedList`1.#ctor(System.Collections.Generic.IList{`0},System.Int32,System.Int32)">
+            <summary>
+            获取IList数据分页返回
+            </summary>
+            <param name="source"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+        </member>
+        <member name="M:api.utils.PagedList`1.#ctor(System.Collections.Generic.IEnumerable{`0},System.Int32,System.Int32,System.Int32)">
+            <summary>
+            获取IEnumerable数据分页返回
+            </summary>
+            <param name="source"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="totalCount"></param>
+        </member>
+        <member name="T:api.utils.PageList`1">
+            <summary>
+            分页对象
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:api.utils.PageList`1.PageIndex">
+            <summary>
+            开始页码
+            </summary>
+        </member>
+        <member name="P:api.utils.PageList`1.PageSize">
+            <summary>
+            分页大小
+            </summary>
+        </member>
+        <member name="P:api.utils.PageList`1.TotalPages">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="P:api.utils.PageList`1.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:api.utils.PageList`1.Data">
+            <summary>
+            数据列表
+            </summary>
+        </member>
+        <member name="M:api.utils.PageList`1.#ctor(System.Collections.Generic.IList{`0},System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="list"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="totalPage"></param>
+            <param name="totalCount"></param>
+        </member>
+        <member name="M:api.utils.PageList`1.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="totalCount"></param>
+        </member>
+        <member name="M:api.utils.PageList`1.#ctor(System.Collections.Generic.IList{`0},System.Int32,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="list"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+        </member>
+        <member name="M:api.utils.PageList`1.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:api.utils.RabbitMQ.MQConfig">
+            <summary>
+             
+            </summary>
+        </member>
+        <member name="P:api.utils.RabbitMQ.MQConfig.ReciveLog">
+            <summary>
+            收到消息是否打日志
+            </summary>
+        </member>
+        <member name="T:api.utils.RabbitMQ.RabbitMQConfig">
+            <summary>
+            RabbitMQ配置
+            </summary>
+        </member>
+        <member name="T:api.utils.RabbitMQ.PublishRabbitMQ">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:api.utils.RabbitMQ.PublishRabbitMQ.Init(api.utils.RabbitMQ.RabbitMQConfig)">
+            <summary>
+            
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:api.utils.RabbitMQ.PublishRabbitMQ.Publish(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:api.utils.Randomer.RandomGenerator">
+            <summary>
+            随机数生成器
+            </summary>
+        </member>
+        <member name="M:api.utils.Randomer.RandomGenerator.NextDouble">
+            <summary>
+            返回一个介于 0.0 和 1.0 之间的随机数
+            </summary>
+            <returns> 大于等于 0.0 并且小于 1.0 的双精度浮点数 </returns>
+        </member>
+        <member name="M:api.utils.Randomer.RandomGenerator.NextString(System.Int32,System.Boolean)">
+            <summary>
+            返回一个随机字符串
+            </summary>
+            <param name="length"> 字符串长度 </param>
+            <param name="isHasSpecialChar">是否包含特殊字符</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.Randomer.RandomGenerator.Next">
+            <summary>
+            返回非负随机数
+            </summary>
+            <returns> 大于等于零且小于 System.Int32.MaxValue 的 32 位带符号整数 </returns>
+        </member>
+        <member name="M:api.utils.Randomer.RandomGenerator.Next(System.Int32)">
+            <summary>
+            返回一个指定范围内的随机数
+            </summary>
+            <param name="maxValue"> 要生成的随机数的上限（随机数不能取该上限值）。maxValue 必须大于或等于零 </param>
+            <returns>
+            大于等于零且小于 maxValue 的 32 位带符号整数，即：返回值的范围通常包括零但不包括 maxValue。 不过，如果 maxValue 等于零，则返回 maxValue。
+            </returns>
+        </member>
+        <member name="M:api.utils.Randomer.RandomGenerator.Next(System.Int32,System.Int32)">
+            <summary>
+            返回一个指定范围内的随机数
+            </summary>
+            <param name="minValue"> 返回的随机数的下界（随机数可取该下界值） </param>
+            <param name="maxValue"> 返回的随机数的上界（随机数不能取该上界值）。 maxValue 必须大于或等于 minValue</param>
+            <returns>
+            一个大于等于 minValue 且小于 maxValue 的 32 位带符号整数，即：返回的值范围包括 minValue 但不包括 maxValue。
+            如果 minValue 等于 maxValue，则返回 minValue。
+            </returns>
+        </member>
+        <member name="T:api.utils.Randomer.VerificationCodeServices">
+            <summary>
+            图片验证码
+            </summary>
+        </member>
+        <member name="M:api.utils.Randomer.VerificationCodeServices.RndomStr(System.Int32)">
+            <summary>  
+            生成指定长度的随机字符串 
+            </summary>  
+            <param name="codeLength">字符串的长度</param>  
+            <returns>返回随机数字符串</returns>  
+        </member>
+        <member name="T:api.utils.security.SecurityHelper">
+            <summary>
+            安全助手
+            </summary>
+        </member>
+        <member name="P:api.utils.security.SecurityHelper.DefaultEncoding">
+            <summary>
+            默认编码
+            </summary>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.HashEncrypt(System.Security.Cryptography.HashAlgorithm,System.String,System.Text.Encoding)">
+            <summary>
+            哈希加密算法
+            </summary>
+            <param name="hashAlgorithm"> 所有加密哈希算法实现均必须从中派生的基类 </param>
+            <param name="input"> 待加密的字符串 </param>
+            <param name="encoding"> 字符编码，为 null 时采用默认编码（UTF-8） </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.VerifyHashValue(System.Security.Cryptography.HashAlgorithm,System.String,System.String,System.Text.Encoding)">
+            <summary>
+            验证哈希值
+            </summary>
+            <param name="hashAlgorithm"> 所有加密哈希算法实现均必须从中派生的基类 </param>
+            <param name="unhashedText"> 未加密的字符串 </param>
+            <param name="hashedText"> 经过加密的哈希值 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.Md5Encrypt(System.String,System.Text.Encoding)">
+            <summary>
+            MD5 加密
+            </summary>
+            <param name="input"> 待加密的字符串 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.VerifyMd5Value(System.String,System.Text.Encoding)">
+            <summary>
+            验证 MD5 值
+            </summary>
+            <param name="input"> 未加密的字符串 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.Sha1Encrypt(System.String,System.Text.Encoding)">
+            <summary>
+            SHA1 加密
+            </summary>
+            <param name="input"> 要加密的字符串 </param>
+            <param name="encoding"> 字符编码，为 null 时取默认值 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.VerifySha1Value(System.String,System.Text.Encoding)">
+            <summary>
+            验证 SHA1 值
+            </summary>
+            <param name="input"> 未加密的字符串 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.Sha256Encrypt(System.String,System.Text.Encoding)">
+            <summary>
+            SHA256 加密
+            </summary>
+            <param name="input"> 要加密的字符串 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.VerifySha256Value(System.String,System.Text.Encoding)">
+            <summary>
+            验证 SHA256 值
+            </summary>
+            <param name="input"> 未加密的字符串 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.Sha384Encrypt(System.String,System.Text.Encoding)">
+            <summary>
+            SHA384 加密
+            </summary>
+            <param name="input"> 要加密的字符串 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.VerifySha384Value(System.String,System.Text.Encoding)">
+            <summary>
+            验证 SHA384 值
+            </summary>
+            <param name="input"> 未加密的字符串 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.Sha512Encrypt(System.String,System.Text.Encoding)">
+            <summary>
+            SHA512 加密
+            </summary>
+            <param name="input"> 要加密的字符串 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.VerifySha512Value(System.String,System.Text.Encoding)">
+            <summary>
+            验证 SHA512 值
+            </summary>
+            <param name="input"> 未加密的字符串 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.HmacMd5Encrypt(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            HMAC-MD5 加密
+            </summary>
+            <param name="input"> 要加密的字符串 </param>
+            <param name="key"> 密钥 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.HmacSha1Encrypt(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            HMAC-SHA1 加密
+            </summary>
+            <param name="input"> 要加密的字符串 </param>
+            <param name="key"> 密钥 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.HmacSha256Encrypt(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            HMAC-SHA256 加密
+            </summary>
+            <param name="input"> 要加密的字符串 </param>
+            <param name="key"> 密钥 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.HmacSha384Encrypt(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            HMAC-SHA384 加密
+            </summary>
+            <param name="input"> 要加密的字符串 </param>
+            <param name="key"> 密钥 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.HmacSha512Encrypt(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            HMAC-SHA512 加密
+            </summary>
+            <param name="input"> 要加密的字符串 </param>
+            <param name="key"> 密钥 </param>
+            <param name="encoding"> 字符编码 </param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.DesEncrypt(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            DES 加密
+            </summary>
+            <param name="input"> 待加密的字符串 </param>
+            <param name="key"> 密钥（8位） </param>
+            <param name="encoding">编码，为 null 取默认值</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.DesDecrypt(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            DES 解密
+            </summary>
+            <param name="input"> 待解密的字符串 </param>
+            <param name="key"> 密钥（8位） </param>
+            <param name="encoding">编码，为 null 时取默认值</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.GenerateRsaKeys(System.String@,System.String@)">
+            <summary>
+            生成 RSA 公钥和私钥
+            </summary>
+            <param name="publicKey"> 公钥 </param>
+            <param name="privateKey"> 私钥 </param>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.RsaEncrypt(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            RSA 加密
+            </summary>
+            <param name="publickey"> 公钥 </param>
+            <param name="content"> 待加密的内容 </param>
+            <param name="encoding">编码，为 null 时取默认编码</param>
+            <returns> 经过加密的字符串 </returns>
+        </member>
+        <member name="M:api.utils.security.SecurityHelper.RsaDecrypt(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            RSA 解密
+            </summary>
+            <param name="privatekey"> 私钥 </param>
+            <param name="content"> 待解密的内容 </param>
+            <param name="encoding"></param>
+            <returns> 解密后的字符串 </returns>
+        </member>
+        <member name="T:api.utils.WebResult">
+            <summary>
+            请求结果
+            </summary>
+        </member>
+        <member name="M:api.utils.WebResult.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:api.utils.WebResult.#ctor(System.Object)">
+            <summary>
+             成功调用
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:api.utils.WebResult.#ctor(System.String,System.Int32)">
+            <summary>
+            异常调用(过滤器中用，业务代码无需使用)
+            </summary>
+            <param name="message"></param>
+            <param name="statusCode"></param>
+        </member>
+        <member name="P:api.utils.WebResult.message">
+            <summary>
+            消息
+            </summary>
+        </member>
+        <member name="P:api.utils.WebResult.data">
+            <summary>
+            返回的数据
+            </summary>
+        </member>
+        <member name="P:api.utils.WebResult.status_code">
+            <summary>
+            状态码为Ok的时候为正常，其他情况为异常
+            </summary>
+        </member>
+        <member name="T:mq.service.core.MQConfig">
+            <summary>
+             
+            </summary>
+        </member>
+        <member name="P:mq.service.core.MQConfig.ReciveLog">
+            <summary>
+            收到消息是否打日志
+            </summary>
+        </member>
+        <member name="T:mq.service.core.RabbitMQConfig">
+            <summary>
+            RabbitMQ配置
+            </summary>
+        </member>
+    </members>
+</doc>

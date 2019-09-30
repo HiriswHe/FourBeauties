@@ -1,0 +1,14 @@
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties.Service\bin\Debug\netcoreapp2.2\FourBeauties.Service.deps.json
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties.Service\bin\Debug\netcoreapp2.2\FourBeauties.Service.dll
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties.Service\bin\Debug\netcoreapp2.2\FourBeauties.Service.pdb
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties.Service\bin\Debug\netcoreapp2.2\daoextend.dll
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties.Service\bin\Debug\netcoreapp2.2\FourBeauties.Domain.dll
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties.Service\bin\Debug\netcoreapp2.2\FourBeauties.Domain.pdb
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties.Service\bin\Debug\netcoreapp2.2\daoextend.pdb
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties.Service\obj\Debug\netcoreapp2.2\FourBeauties.Service.csprojAssemblyReference.cache
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties.Service\obj\Debug\netcoreapp2.2\FourBeauties.Service.csproj.CoreCompileInputs.cache
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties.Service\obj\Debug\netcoreapp2.2\FourBeauties.Service.AssemblyInfoInputs.cache
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties.Service\obj\Debug\netcoreapp2.2\FourBeauties.Service.AssemblyInfo.cs
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties.Service\obj\Debug\netcoreapp2.2\FourBeauties.Service.csproj.CopyComplete
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties.Service\obj\Debug\netcoreapp2.2\FourBeauties.Service.dll
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties.Service\obj\Debug\netcoreapp2.2\FourBeauties.Service.pdb
