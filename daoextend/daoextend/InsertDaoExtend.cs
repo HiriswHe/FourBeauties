@@ -1,4 +1,6 @@
-﻿using daoextend.interfaces;
+﻿using daoextend.config;
+using daoextend.interfaces;
+using daoextend.log;
 using daoextend.utils;
 using Dapper;
 using System;
@@ -15,11 +17,12 @@ namespace daoextend.daoextend
             {
                 if (insertProperties == null) return false;
                 string connectionKey = insertProperties.GetConnectionKey();
-                string connectionString = CommonHelpr.GetConfig(connectionKey);
+                string connectionString = AppSetting.GetConfig(connectionKey);
                 using (IDbConnection dbConnection = insertProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
                     var sql = insertProperties.GetInsertSql(id, properties);
+                    if (CommonHelper.LogSql) Logger.Info(sql);
                     return dbConnection.Execute(sql, insertProperties) > 0;
                 }
             }

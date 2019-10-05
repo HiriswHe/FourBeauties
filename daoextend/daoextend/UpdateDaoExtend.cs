@@ -1,8 +1,10 @@
 ﻿using daoextend.attributes;
+using daoextend.config;
 using daoextend.consts;
 using daoextend.dbconnection;
 using daoextend.enums;
 using daoextend.interfaces;
+using daoextend.log;
 using daoextend.utils;
 using Dapper;
 using System;
@@ -22,7 +24,7 @@ namespace daoextend.daoextend
             if (tableAttribute == null) throw new Exception("TableAttribute Not Found");
             DBServerType dBServerType = tableAttribute.DBServerType;
             string connectionKey = tableAttribute.ConnectionKey;
-            string connectionString = CommonHelpr.GetConfig(connectionKey);
+            string connectionString = AppSetting.GetConfig(connectionKey);
             return DBConnectionFactory.GetDbConnection(connectionString, dBServerType);
         }
 
@@ -36,6 +38,7 @@ namespace daoextend.daoextend
                 {
                     dbConnection.Open();
                     var sql = updateProperties.GetUpdateSql(id,listsIn, properties);
+                    if (CommonHelper.LogSql) Logger.Info(sql);
                     var result = dbConnection.Execute(sql, updateProperties) > 0;
                     if (!result) throw new Exception("没有匹配的记录");
                     return result;

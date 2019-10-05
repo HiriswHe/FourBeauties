@@ -1,4 +1,5 @@
 ﻿using daoextend.attributes;
+using daoextend.config;
 using daoextend.consts;
 using daoextend.interfaces;
 using daoextend.log;
@@ -20,10 +21,11 @@ namespace daoextend.daoextend
             {
                 if (selectProperties == null) return default(List<T>);
                 string connectionKey = selectProperties.GetConnectionKey();
-                string connectionString = CommonHelpr.GetConfig(connectionKey);
+                string connectionString = AppSetting.GetConfig(connectionKey);
                 using (IDbConnection dbConnection = selectProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
+                    if (CommonHelper.LogSql) Logger.Info(sql);
                     if (needParameters)
                         return dbConnection.Query<T>(sql, selectProperties).ToList();
                     else
@@ -40,12 +42,12 @@ namespace daoextend.daoextend
             {
                 if (selectProperties == null) return default(List<T>);
                 string connectionKey = selectProperties.GetConnectionKey();
-                string connectionString = CommonHelpr.GetConfig(connectionKey);
+                string connectionString = AppSetting.GetConfig(connectionKey);
                 using (IDbConnection dbConnection = selectProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
                     var sql = selectProperties.GetInSelectSql(id, listsIn, sqlAppend, properties);
-                    //Logger.Info(sql);
+                    if (CommonHelper.LogSql) Logger.Info(sql);
                     return dbConnection.Query<T>(sql, selectProperties).ToList();
                 }
             }
@@ -59,12 +61,12 @@ namespace daoextend.daoextend
             {
                 if (selectProperties == null) return default(List<T>);
                 string connectionKey = selectProperties.GetConnectionKey();
-                string connectionString = CommonHelpr.GetConfig(connectionKey);
+                string connectionString = AppSetting.GetConfig(connectionKey);
                 using (IDbConnection dbConnection = selectProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
                     var sql = selectProperties.GetInSelectSql(id,listsIn,sqlAppend, properties);
-                    //Logger.Info(sql);
+                    if (CommonHelper.LogSql) Logger.Info(sql);
                     return dbConnection.Query<T>(sql, selectProperties).ToList();
                 }
             }

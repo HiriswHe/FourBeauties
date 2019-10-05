@@ -1,7 +1,9 @@
 ﻿using daoextend.attributes;
+using daoextend.config;
 using daoextend.consts;
 using daoextend.enums;
 using daoextend.interfaces;
+using daoextend.log;
 using daoextend.utils;
 using Dapper;
 using System;
@@ -21,11 +23,12 @@ namespace daoextend.daoextend
             {
                 if (statisticsProperties == null) return default(List<T>);
                 string connectionKey = statisticsProperties.GetConnectionKey();
-                string connectionString = CommonHelpr.GetConfig(connectionKey);
+                string connectionString = AppSetting.GetConfig(connectionKey);
                 using (IDbConnection dbConnection = statisticsProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
                     var sql = statisticsProperties.GetInSelectSql(id, listsIn, sqlAppend);
+                    if (CommonHelper.LogSql) Logger.Info(sql);
                     return dbConnection.Query<T>(sql, statisticsProperties).ToList();
                 }
             }

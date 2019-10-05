@@ -17,3 +17,4 @@ F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties\obj\Debug\netcoreapp2.2\Fo
 F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties\obj\Debug\netcoreapp2.2\FourBeauties.dll
 F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties\obj\Debug\netcoreapp2.2\FourBeauties.pdb
 F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties\bin\Debug\netcoreapp2.2\appsettings.json
+F:\Work\mtscitech\4Beauties\FourBeauties\FourBeauties\bin\Debug\netcoreapp2.2\log4net.config

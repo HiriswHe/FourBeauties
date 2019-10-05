@@ -9,14 +9,14 @@ namespace daoextend.utils
     /// <summary>
     /// 
     /// </summary>
-    public class CommonHelpr
+    public class AppSetting
     {
         private static readonly object objLock = new object();
-        private static CommonHelpr instance = null;
+        private static AppSetting instance = null;
 
         private IConfigurationRoot Config { get; }
 
-        private CommonHelpr()
+        private AppSetting()
         {
             var builder = new ConfigurationBuilder()
              .SetBasePath(Directory.GetCurrentDirectory())
@@ -28,7 +28,7 @@ namespace daoextend.utils
         /// 
         /// </summary>
         /// <returns></returns>
-        public static CommonHelpr GetInstance()
+        public static AppSetting GetInstance()
         {
             if (instance == null)
             {
@@ -36,7 +36,7 @@ namespace daoextend.utils
                 {
                     if (instance == null)
                     {
-                        instance = new CommonHelpr();
+                        instance = new AppSetting();
                     }
                 }
             }

@@ -1,4 +1,6 @@
-﻿using daoextend.interfaces;
+﻿using daoextend.config;
+using daoextend.interfaces;
+using daoextend.log;
 using daoextend.utils;
 using Dapper;
 using MySql.Data.MySqlClient;
@@ -17,11 +19,15 @@ namespace daoextend.daoextend
             {
                 if (deleteProperties == null) return false;
                 string connectionKey = deleteProperties.GetConnectionKey();
-                string connectionString = CommonHelpr.GetConfig(connectionKey);
+                connectionKey = connectionKey.Trim();
+                if (connectionKey.StartsWith('{') && connectionKey.EndsWith('}'))
+                    connectionKey = AppSetting.GetConfig(connectionKey.TrimStart('{').TrimEnd('}'));
+                string connectionString = AppSetting.GetConfig(connectionKey);
                 using (IDbConnection dbConnection = deleteProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
                     var sql = deleteProperties.GetDeleteSql(id,listsIn);
+                    if (CommonHelper.LogSql) Logger.Info(sql);
                     var result = dbConnection.Execute(sql, deleteProperties) > 0;
                     if (!result) throw new Exception("没有匹配的记录");
                     return result;
