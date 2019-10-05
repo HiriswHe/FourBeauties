@@ -51,3 +51,4 @@ F:\Work\mtscitech\Pechoin\Git2\api.auth\daoextend\obj\Debug\netcoreapp2.2\daoext
 F:\Work\mtscitech\Pechoin\Git2\api.auth\daoextend\obj\Debug\netcoreapp2.2\daoextend.AssemblyInfo.cs
 F:\Work\mtscitech\Pechoin\Git2\api.auth\daoextend\obj\Debug\netcoreapp2.2\daoextend.dll
 F:\Work\mtscitech\Pechoin\Git2\api.auth\daoextend\obj\Debug\netcoreapp2.2\daoextend.pdb
+F:\Work\mtscitech\4Beauties\FourBeauties\daoextend\obj\Debug\netcoreapp2.2\daoextend.csprojAssemblyReference.cache

@@ -1,5 +1,6 @@
 ﻿using daoextend.attributes;
 using daoextend.interfaces;
+using daoextend.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,9 @@ namespace daoextend.daoextend
             {
                 tableName = updateProperties.GetType().Name;
             }
+            if (string.IsNullOrEmpty(tableName)) return tableName;
+            if (tableName.Trim().StartsWith("{") && tableName.Trim().EndsWith("}"))
+                tableName = AppSetting.GetConfig(tableName.Trim().TrimStart('{').TrimEnd('}'));
             return tableName;
         }
 
@@ -32,6 +36,10 @@ namespace daoextend.daoextend
         {
             var tableAttribute = updateProperties.GetCustomerAttributes<MatchedTableAttribute>().FirstOrDefault(w => w.ID == id);
             var connectionKey = tableAttribute?.ConnectionKey;
+            if (string.IsNullOrEmpty(connectionKey)) return connectionKey;
+            connectionKey = connectionKey.Trim();
+            if (connectionKey.StartsWith('{') && connectionKey.EndsWith('}'))
+                connectionKey = AppSetting.GetConfig(connectionKey.TrimStart('{').TrimEnd('}'));
             return connectionKey;
         }
 
