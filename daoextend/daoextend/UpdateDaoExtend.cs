@@ -1,10 +1,8 @@
 ﻿using daoextend.attributes;
-using daoextend.config;
 using daoextend.consts;
 using daoextend.dbconnection;
 using daoextend.enums;
 using daoextend.interfaces;
-using daoextend.log;
 using daoextend.utils;
 using Dapper;
 using System;
@@ -28,7 +26,7 @@ namespace daoextend.daoextend
             return DBConnectionFactory.GetDbConnection(connectionString, dBServerType);
         }
 
-        public static bool UpdatePropertiesByKey(this IUpdateProperties updateProperties,int id=0, List<List<object>> listsIn = null, params string[] properties)
+        public static bool UpdatePropertiesByKey(this IUpdateProperties updateProperties,int id=0, string tableIndex = "", List<List<object>> listsIn = null, params string[] properties)
         {
             try
             {
@@ -37,8 +35,7 @@ namespace daoextend.daoextend
                 using (IDbConnection dbConnection = updateProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
-                    var sql = updateProperties.GetUpdateSql(id,listsIn, properties);
-                    if (CommonHelper.LogSql) Logger.Info(sql);
+                    var sql = updateProperties.GetUpdateSql(id,tableIndex, listsIn, properties);
                     var result = dbConnection.Execute(sql, updateProperties) > 0;
                     if (!result) throw new Exception("没有匹配的记录");
                     return result;
@@ -48,10 +45,10 @@ namespace daoextend.daoextend
             { throw ex; }
         }
 
-        public static string GetUpdateSql(this IUpdateProperties updateProperties, int id = 0, List<List<object>> listsIn = null, params string[] properties)
+        public static string GetUpdateSql(this IUpdateProperties updateProperties, int id = 0, string tableIndex = "", List<List<object>> listsIn = null, params string[] properties)
         {
             StringBuilder builder = new StringBuilder();
-            var tableName = updateProperties.GetTableName();
+            var tableName = updateProperties.GetTableName(tableIndex);
             builder.AppendLine(string.Format("Update {0} Set ", tableName));
             if (properties != null && properties.Length > 0)
                 foreach (var property in properties)

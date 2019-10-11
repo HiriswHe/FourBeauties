@@ -1,8 +1,6 @@
-﻿using daoextend.config;
-using daoextend.dbconnection;
+﻿using daoextend.dbconnection;
 using daoextend.enums;
 using daoextend.interfaces;
-using daoextend.log;
 using daoextend.utils;
 using Dapper;
 using System;
@@ -25,9 +23,12 @@ namespace daoextend.daoextend
                 using (IDbConnection dbConnection = cURDProperties.GetDBConnection())
                 {
                     dbConnection.Open();
-                    if (CommonHelper.LogSql) Logger.Info(sql);
+                    var transation = dbConnection.BeginTransaction();
                     if (parameterrs != null && parameterrs.Length > 0)
-                        result = dbConnection.Execute(sql, parameterrs) > 0;
+                    {
+                        result = dbConnection.Execute(sql, parameterrs, transation) > 0;
+                        transation.Commit();
+                    }
                     else
                         result = dbConnection.Execute(sql) > 0;
                 }

@@ -1,5 +1,4 @@
 ﻿using daoextend.attributes;
-using daoextend.config;
 using daoextend.consts;
 using daoextend.interfaces;
 using daoextend.log;
@@ -25,7 +24,6 @@ namespace daoextend.daoextend
                 using (IDbConnection dbConnection = selectProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
-                    if (CommonHelper.LogSql) Logger.Info(sql);
                     if (needParameters)
                         return dbConnection.Query<T>(sql, selectProperties).ToList();
                     else
@@ -36,7 +34,7 @@ namespace daoextend.daoextend
             { throw ex; }
         }
 
-        public static List<T> SelectPropertiesExists<T>(this ISelectProperties selectProperties, int id = MatchedID.SelectExists, List<List<object>> listsIn = null, string sqlAppend = "", params string[] properties)
+        public static List<T> SelectPropertiesExists<T>(this ISelectProperties selectProperties, int id = MatchedID.SelectExists, string tableIndex ="", List<List<object>> listsIn = null, string sqlAppend = "", params string[] properties)
         {
             try
             {
@@ -46,8 +44,8 @@ namespace daoextend.daoextend
                 using (IDbConnection dbConnection = selectProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
-                    var sql = selectProperties.GetInSelectSql(id, listsIn, sqlAppend, properties);
-                    if (CommonHelper.LogSql) Logger.Info(sql);
+                    var sql = selectProperties.GetInSelectSql(id,tableIndex, listsIn, sqlAppend, properties);
+                    //Logger.Info(sql);
                     return dbConnection.Query<T>(sql, selectProperties).ToList();
                 }
             }
@@ -55,7 +53,7 @@ namespace daoextend.daoextend
             { throw ex; }
         }
 
-        public static List<T> SelectPropertiesByKey<T>(this ISelectProperties selectProperties,int id = 0,List<List<object>> listsIn=null, string sqlAppend="",  params string[] properties)
+        public static List<T> SelectPropertiesByKey<T>(this ISelectProperties selectProperties,int id = 0, string tableIndex = "", List<List<object>> listsIn=null, string sqlAppend="",  params string[] properties)
         {
             try
             {
@@ -65,9 +63,12 @@ namespace daoextend.daoextend
                 using (IDbConnection dbConnection = selectProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
-                    var sql = selectProperties.GetInSelectSql(id,listsIn,sqlAppend, properties);
-                    if (CommonHelper.LogSql) Logger.Info(sql);
-                    return dbConnection.Query<T>(sql, selectProperties).ToList();
+                    var sql = selectProperties.GetInSelectSql(id,tableIndex,listsIn,sqlAppend, properties);
+                    //Logger.Info(sql);
+                    //if (listsIn == null)
+                        return dbConnection.Query<T>(sql, selectProperties).ToList();
+                    //else
+                     //   return dbConnection.Query<T>(sql).ToList();
                 }
             }
             catch (Exception ex)
@@ -87,12 +88,12 @@ namespace daoextend.daoextend
             return result;
         }
 
-        public static string GetSelectSql(this ISelectProperties selectProperties, int id = 0,string sqlAppend="", params string[] properties)
+        public static string GetSelectSql(this ISelectProperties selectProperties, int id = 0, string tableIndex = "", string sqlAppend="", params string[] properties)
         {
             string result = string.Empty;
             StringBuilder builder = new StringBuilder();
             var selectColumnNames = GetSelectColumnSql(selectProperties,id,properties);
-            var tableName = selectProperties.GetTableName();
+            var tableName = selectProperties.GetTableName(tableIndex);
             var collectionLimit = selectProperties.GetSelectCollectionLimit(id);
             builder.AppendLine(string.Format("Select {0} {1} From {2} ",collectionLimit, selectColumnNames.ToString(), tableName));
             var matchedKeys = selectProperties.GetMatchedKeyNameAndValues(id);
@@ -102,12 +103,12 @@ namespace daoextend.daoextend
             return result;
         }
 
-        public static string GetInSelectSql(this ISelectProperties selectProperties, int id = 0,  List< List<object>> listsIn=null, string sqlAppend = "", params string[] properties)
+        public static string GetInSelectSql(this ISelectProperties selectProperties, int id = 0, string tableIndex = "", List< List<object>> listsIn=null, string sqlAppend = "", params string[] properties)
         {
             string result = string.Empty;
             StringBuilder builder = new StringBuilder();
             var selectColumnNames = GetSelectColumnSql(selectProperties, id, properties);
-            var tableName = selectProperties.GetTableName();
+            var tableName = selectProperties.GetTableName(tableIndex);
             var collectionLimit = selectProperties.GetSelectCollectionLimit(id);
             builder.AppendLine(string.Format("Select {0} {1} From {2} ", collectionLimit, selectColumnNames.ToString(), tableName));
             var matchedKeys = selectProperties.GetInMatchedKeyNameAndValues(id,true,listsIn?.ToArray());

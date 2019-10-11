@@ -22,7 +22,7 @@ namespace daoextend.daoextend
             }
             else
             {
-                var aliasName = property.GetCustomAttributes(typeof(DaoAliasNameAttribute), true)?.Select(w=> (DaoAliasNameAttribute)w).FirstOrDefault(w => w.ID == 0);
+                var aliasName = property.GetCustomAttributes(typeof(AliasNameAttribute), true)?.Select(w=> (AliasNameAttribute)w).FirstOrDefault(w => w.ID == 0);
                 result = aliasName?.Name;
             }
             if (string.IsNullOrEmpty(result))

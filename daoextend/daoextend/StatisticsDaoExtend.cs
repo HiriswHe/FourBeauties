@@ -1,9 +1,7 @@
 ﻿using daoextend.attributes;
-using daoextend.config;
 using daoextend.consts;
 using daoextend.enums;
 using daoextend.interfaces;
-using daoextend.log;
 using daoextend.utils;
 using Dapper;
 using System;
@@ -17,7 +15,7 @@ namespace daoextend.daoextend
 {
     public static class StatisticsDaoExtend
     {
-        public static List<T> StatisticsByKey<T>(this IStatisticsProperties statisticsProperties, int id = MatchedID.Statistics, List<List<object>> listsIn = null, string sqlAppend = "")
+        public static List<T> StatisticsByKey<T>(this IStatisticsProperties statisticsProperties, int id = MatchedID.Statistics, string tableIndex = "", List<List<object>> listsIn = null, string sqlAppend = "")
         {
             try
             {
@@ -27,8 +25,7 @@ namespace daoextend.daoextend
                 using (IDbConnection dbConnection = statisticsProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
-                    var sql = statisticsProperties.GetInSelectSql(id, listsIn, sqlAppend);
-                    if (CommonHelper.LogSql) Logger.Info(sql);
+                    var sql = statisticsProperties.GetInSelectSql(id,tableIndex, listsIn, sqlAppend);
                     return dbConnection.Query<T>(sql, statisticsProperties).ToList();
                 }
             }
@@ -36,7 +33,7 @@ namespace daoextend.daoextend
             { throw ex; }
         }
                 
-        public static string GetInSelectSql(this IStatisticsProperties statisticsProperties, int id = MatchedID.Statistics, List<List<object>> listsIn = null, string sqlAppend = "")
+        public static string GetInSelectSql(this IStatisticsProperties statisticsProperties, int id = MatchedID.Statistics, string tableIndex = "", List<List<object>> listsIn = null, string sqlAppend = "")
         {
             string result = string.Empty;
             StringBuilder builder = new StringBuilder();
@@ -46,7 +43,7 @@ namespace daoextend.daoextend
                 header = headersAndFooters[StatisticsType.Header];
             if (headersAndFooters.ContainsKey(StatisticsType.Footer))
                 footer= headersAndFooters[StatisticsType.Footer];
-            var tableName = statisticsProperties.GetTableName();
+            var tableName = statisticsProperties.GetTableName(tableIndex);
             builder.AppendLine(string.Format("Select {0} From {1}", header,tableName));
             var matchedKeys = statisticsProperties.GetInMatchedKeyNameAndValues(id,false, listsIn?.ToArray());
             builder.AppendJoin(" ", matchedKeys);

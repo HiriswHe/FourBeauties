@@ -1,6 +1,4 @@
-﻿using daoextend.config;
-using daoextend.interfaces;
-using daoextend.log;
+﻿using daoextend.interfaces;
 using daoextend.utils;
 using Dapper;
 using MySql.Data.MySqlClient;
@@ -13,21 +11,17 @@ namespace daoextend.daoextend
 {
     public static class DeleteDaoExtend
     {
-        public static bool DeletePropertiesByKey(this IDeleteProperties deleteProperties,int id = 0,List<List<object>> listsIn = null, string sqlAppend = "")
+        public static bool DeletePropertiesByKey(this IDeleteProperties deleteProperties, int id = 0, string tableIndex ="", List<List<object>> listsIn = null, string sqlAppend = "")
         {
             try
             {
                 if (deleteProperties == null) return false;
                 string connectionKey = deleteProperties.GetConnectionKey();
-                connectionKey = connectionKey.Trim();
-                if (connectionKey.StartsWith('{') && connectionKey.EndsWith('}'))
-                    connectionKey = AppSetting.GetConfig(connectionKey.TrimStart('{').TrimEnd('}'));
                 string connectionString = AppSetting.GetConfig(connectionKey);
                 using (IDbConnection dbConnection = deleteProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
-                    var sql = deleteProperties.GetDeleteSql(id,listsIn);
-                    if (CommonHelper.LogSql) Logger.Info(sql);
+                    var sql = deleteProperties.GetDeleteSql(id,tableIndex,listsIn);
                     var result = dbConnection.Execute(sql, deleteProperties) > 0;
                     if (!result) throw new Exception("没有匹配的记录");
                     return result;
@@ -37,11 +31,11 @@ namespace daoextend.daoextend
             { throw ex; }
         }
 
-        public static string GetDeleteSql(this IDeleteProperties deleteProperties, int id = 0, List<List<object>> listsIn = null, string sqlAppend = "")
+        public static string GetDeleteSql(this IDeleteProperties deleteProperties, int id = 0, string tableIndex ="", List<List<object>> listsIn = null, string sqlAppend = "")
         {
             string result = string.Empty;
             StringBuilder builder = new StringBuilder();
-            var tableName = deleteProperties.GetTableName();
+            var tableName = deleteProperties.GetTableName(tableIndex);
             builder.AppendLine(string.Format("Delete From {0} ", tableName));
             var matchedKeys = deleteProperties.GetInMatchedKeyNameAndValues(id,false,listsIn?.ToArray());
             builder.AppendJoin(" ", matchedKeys);

@@ -1,6 +1,4 @@
-﻿using daoextend.config;
-using daoextend.interfaces;
-using daoextend.log;
+﻿using daoextend.interfaces;
 using daoextend.utils;
 using Dapper;
 using System;
@@ -11,7 +9,7 @@ namespace daoextend.daoextend
 {
     public static class InsertDaoExtend
     {
-        public static bool InsertProperties(this IInsertProperties insertProperties, int id = 0, params string[] properties)
+        public static bool InsertProperties(this IInsertProperties insertProperties,  int id = 0, string tableIndex = "", params string[] properties)
         {
             try
             {
@@ -21,8 +19,7 @@ namespace daoextend.daoextend
                 using (IDbConnection dbConnection = insertProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
-                    var sql = insertProperties.GetInsertSql(id, properties);
-                    if (CommonHelper.LogSql) Logger.Info(sql);
+                    var sql = insertProperties.GetInsertSql( id, tableIndex, properties);
                     return dbConnection.Execute(sql, insertProperties) > 0;
                 }
             }
@@ -30,11 +27,11 @@ namespace daoextend.daoextend
             { throw ex; }
         }
 
-        public static string GetInsertSql(this IInsertProperties insertProperties, int id = 0,params string[] properties)
+        public static string GetInsertSql(this IInsertProperties insertProperties,  int id = 0, string tableIndex = "", params string[] properties)
         {
             string result = string.Empty;
             StringBuilder builder = new StringBuilder();
-            var tableName = insertProperties.GetTableName();
+            var tableName = insertProperties.GetTableName(tableIndex);
             builder.AppendLine(string.Format("Insert into {0}( ", tableName));
             if (string.IsNullOrEmpty(insertProperties.UUID)) insertProperties.UUID = Guid.NewGuid().ToString("N");
             StringBuilder columnNames = new StringBuilder();
