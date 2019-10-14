@@ -9,5 +9,6 @@ namespace daoextend.attributes
     public class ShardingColumnAttribute:Attribute
     {
         public int ID { get; set; } = MatchedID.All;
+        public string Key { get; set; } = "DefaultKey";
     }
 }

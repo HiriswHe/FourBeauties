@@ -36,7 +36,7 @@ namespace FourBeauties.Domain.PO
         /// </summary>
         [MatchedColumn(ID = MatchedID.Delete)]
         [MatchedColumn(ID = MatchedID.Update)]
-        [ShardingColumn]
+        [ShardingColumn(Key ="HashKey")]
         public string workline_uuid { get; set; }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using daoextend.attributes;
 using daoextend.consts;
+using daoextend.entity;
 using daoextend.interfaces;
 using System;
 using System.Collections.Generic;
@@ -22,16 +23,16 @@ namespace daoextend.daoextend
             dataBaseSharding.__DataBaseIndex__ = sharding.SharingByObject(shardingValues, shardingTotal);
         }
 
-        public static List<Object> GetShardingColumnValues(this IDataBaseSharding dataBaseSharding, int id = MatchedID.All)
+        public static List<ShardingParameter> GetShardingColumnValues(this IDataBaseSharding dataBaseSharding, int id = MatchedID.All)
         {
             var properties = dataBaseSharding.GetType().GetProperties();
-            List<object> shardingColumnObjects = new List<object>();
+            List<ShardingParameter> shardingColumnObjects = new List<ShardingParameter>();
             foreach (var property in properties)
             {
                 var shardingColumns = property.GetCustomAttributes(typeof(ShardingColumnAttribute), true)?.Select(w => (ShardingColumnAttribute)w)?.ToList();
-                var shardingColumn = shardingColumns.FindAll(w => w.ID == id);
-                if (shardingColumn != null && shardingColumn.Count > 0)
-                    shardingColumnObjects.Add(property.GetValue(dataBaseSharding, null));
+                var shardingColumn = shardingColumns.FindAll(w => w.ID == id).FirstOrDefault();
+                if (shardingColumn != null )
+                    shardingColumnObjects.Add(new ShardingParameter { Key = shardingColumn.Key, Value = property.GetValue(dataBaseSharding, null) });
             }
             return shardingColumnObjects;
         }
