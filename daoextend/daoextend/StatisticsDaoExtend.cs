@@ -1,5 +1,6 @@
 ﻿using daoextend.attributes;
 using daoextend.consts;
+using daoextend.daoextra;
 using daoextend.enums;
 using daoextend.interfaces;
 using daoextend.utils;
@@ -15,13 +16,11 @@ namespace daoextend.daoextend
 {
     public static class StatisticsDaoExtend
     {
-        public static List<T> StatisticsByKey<T>(this IStatisticsProperties statisticsProperties, int id = MatchedID.Statistics, string tableIndex = "", List<List<object>> listsIn = null, string sqlAppend = "")
+        public static List<T> StatisticsByKey<T>(this IStatisticsProperties statisticsProperties, int id = MatchedID.Statistics, string tableIndex = null, List<List<object>> listsIn = null, string sqlAppend = "")
         {
             try
             {
                 if (statisticsProperties == null) return default(List<T>);
-                string connectionKey = statisticsProperties.GetConnectionKey();
-                string connectionString = AppSetting.GetConfig(connectionKey);
                 using (IDbConnection dbConnection = statisticsProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
@@ -33,7 +32,7 @@ namespace daoextend.daoextend
             { throw ex; }
         }
                 
-        public static string GetInSelectSql(this IStatisticsProperties statisticsProperties, int id = MatchedID.Statistics, string tableIndex = "", List<List<object>> listsIn = null, string sqlAppend = "")
+        public static string GetInSelectSql(this IStatisticsProperties statisticsProperties, int id = MatchedID.Statistics, string tableIndex = null, List<List<object>> listsIn = null, string sqlAppend = "")
         {
             string result = string.Empty;
             StringBuilder builder = new StringBuilder();
@@ -73,7 +72,7 @@ namespace daoextend.daoextend
             if (propertiesAll != null)
                 foreach (var property in propertiesAll)
                 {
-                    if (property == null) return result;
+                    if (property == null||property.IsPropertyUsedByFrameWork()) continue;
                     var statisticsAll = property.GetCustomAttributes(typeof(StatisticsAttribute),true)?.Select(w=>(StatisticsAttribute)w).Where(w => w.ID == id);
                     foreach (var statistics in statisticsAll)
                         if (statistics != null)

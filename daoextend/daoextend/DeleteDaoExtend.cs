@@ -11,13 +11,11 @@ namespace daoextend.daoextend
 {
     public static class DeleteDaoExtend
     {
-        public static bool DeletePropertiesByKey(this IDeleteProperties deleteProperties, int id = 0, string tableIndex ="", List<List<object>> listsIn = null, string sqlAppend = "")
+        public static bool DeletePropertiesByKey(this IDeleteProperties deleteProperties, int id = 0, string tableIndex = null, List<List<object>> listsIn = null, string sqlAppend = "")
         {
             try
             {
                 if (deleteProperties == null) return false;
-                string connectionKey = deleteProperties.GetConnectionKey();
-                string connectionString = AppSetting.GetConfig(connectionKey);
                 using (IDbConnection dbConnection = deleteProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
@@ -31,7 +29,7 @@ namespace daoextend.daoextend
             { throw ex; }
         }
 
-        public static string GetDeleteSql(this IDeleteProperties deleteProperties, int id = 0, string tableIndex ="", List<List<object>> listsIn = null, string sqlAppend = "")
+        public static string GetDeleteSql(this IDeleteProperties deleteProperties, int id = 0, string tableIndex = null, List<List<object>> listsIn = null, string sqlAppend = "")
         {
             string result = string.Empty;
             StringBuilder builder = new StringBuilder();

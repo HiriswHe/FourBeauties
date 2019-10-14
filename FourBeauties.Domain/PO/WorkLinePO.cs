@@ -8,9 +8,11 @@ using System.Text;
 
 namespace FourBeauties.Domain.PO
 {
-    [MatchedTable(DBServerType = DBServerType.MySql, ConnectionKey = "ConnectionStrings:produce", Name = "workline")]
-    public class WorkLinePO : ICURDAll
+    [MatchedTable(DBServerType = DBServerType.MySql, ConnectionKey = "ConnectionStrings:produce", Name = "workline{0}")]
+    public class WorkLinePO : ICURDAll,ITableSharding,IDataBaseSharding
     {
+        public string __TableIndex__ { get; set ; }
+        public string __DataBaseIndex__ { get; set ; }
         [Ignore(ID = MatchedID.All)]
         public string UUID
         {

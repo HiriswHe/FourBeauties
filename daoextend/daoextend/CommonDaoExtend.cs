@@ -18,8 +18,6 @@ namespace daoextend.daoextend
             try
             {
                 if (cURDProperties == null) return false;
-                string connectionKey = cURDProperties.GetConnectionKey();
-                string connectionString = AppSetting.GetConfig(connectionKey);
                 using (IDbConnection dbConnection = cURDProperties.GetDBConnection())
                 {
                     dbConnection.Open();

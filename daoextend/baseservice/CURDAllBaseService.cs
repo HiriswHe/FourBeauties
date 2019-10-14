@@ -16,7 +16,7 @@ namespace daoextend.baseservice
     public class CURDAllBaseService<TBO,TPO> where TPO :ICURDAll
     {
        public virtual CURDAllBaseDao<TPO> CURDAllBaseDao { get; set; } = new CURDAllBaseDao<TPO>();
-        public virtual void Insert(TBO bo,int id=MatchedID.Insert, string tableIndex = "")
+        public virtual void Insert(TBO bo,int id=MatchedID.Insert, string tableIndex = null)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace daoextend.baseservice
             }
         }
 
-        public virtual void DeleteByKey(TBO bo,int id=MatchedID.Delete, string tableIndex = "")
+        public virtual void DeleteByKey(TBO bo,int id=MatchedID.Delete, string tableIndex = null)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace daoextend.baseservice
             }
         }
 
-        public virtual void UpdateByKey(TBO bo,int id=MatchedID.Update, string tableIndex = "", params string[] parameters)
+        public virtual void UpdateByKey(TBO bo,int id=MatchedID.Update, string tableIndex = null, params string[] parameters)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace daoextend.baseservice
             }
         }
 
-        public virtual List<TVO> SelectAllByKey<TDTO,TVO>(TBO bo,int id=MatchedID.SelectAll, string tableIndex = "")
+        public virtual List<TVO> SelectAllByKey<TDTO,TVO>(TBO bo,int id=MatchedID.SelectAll, string tableIndex = null)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace daoextend.baseservice
             }
         }
 
-        public virtual TVO SelectExists<TDTO, TVO>(TBO bo, int id = MatchedID.SelectExists, string tableIndex = "")
+        public virtual TVO SelectExists<TDTO, TVO>(TBO bo, int id = MatchedID.SelectExists, string tableIndex = null)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace daoextend.baseservice
             }
         }
 
-        public virtual TVO SelectSingleByKey<TDTO, TVO>(TBO bo, int id = MatchedID.SelectSingle, string tableIndex = "")
+        public virtual TVO SelectSingleByKey<TDTO, TVO>(TBO bo, int id = MatchedID.SelectSingle, string tableIndex = null)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace daoextend.baseservice
             }
         }
 
-        public virtual List<TVO> SelectByIn<TDTO, TVO>(TBO bo,int id=MatchedID.SelectIn, string tableIndex = "", params List<object>[] listsIn)
+        public virtual List<TVO> SelectByIn<TDTO, TVO>(TBO bo,int id=MatchedID.SelectIn, string tableIndex = null, params List<object>[] listsIn)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace daoextend.baseservice
             }
         }
 
-        public virtual bool DeleteByIn(TBO bo, int id = MatchedID.DeleteIn, string tableIndex = "", params List<object>[] listsIn)
+        public virtual bool DeleteByIn(TBO bo, int id = MatchedID.DeleteIn, string tableIndex = null, params List<object>[] listsIn)
         {
             try
             {
@@ -127,7 +127,7 @@ namespace daoextend.baseservice
             }
         }        
 
-        public virtual bool UpdateByIn(TBO bo, int id = MatchedID.UpdateIn, string tableIndex = "", List<List<object>> listsIn=null,params string[] properties)
+        public virtual bool UpdateByIn(TBO bo, int id = MatchedID.UpdateIn, string tableIndex = null, List<List<object>> listsIn=null,params string[] properties)
         {
             try
             {
@@ -155,7 +155,7 @@ namespace daoextend.baseservice
             return result;
         }
 
-        public virtual List<TVO> StatisticByKey<TDTO, TVO>(TBO bo, int id = MatchedID.Statistics, string tableIndex = "", List<List<object>> listsIn = null, string sqlAppend = "")
+        public virtual List<TVO> StatisticByKey<TDTO, TVO>(TBO bo, int id = MatchedID.Statistics, string tableIndex = null, List<List<object>> listsIn = null, string sqlAppend = "")
         {
             try
             {

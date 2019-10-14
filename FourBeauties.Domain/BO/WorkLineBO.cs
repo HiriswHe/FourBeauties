@@ -7,6 +7,8 @@ namespace FourBeauties.Domain.BO
 {
     public class WorkLineBO
     {
+        public string __TableIndex__ { get; set; }
+        public string __DataBaseIndex__ { get; set; }
         /// <summary>
         /// 
         /// </summary>

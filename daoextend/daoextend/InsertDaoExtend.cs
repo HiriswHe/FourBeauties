@@ -1,4 +1,5 @@
-﻿using daoextend.interfaces;
+﻿using daoextend.daoextra;
+using daoextend.interfaces;
 using daoextend.utils;
 using Dapper;
 using System;
@@ -9,13 +10,11 @@ namespace daoextend.daoextend
 {
     public static class InsertDaoExtend
     {
-        public static bool InsertProperties(this IInsertProperties insertProperties,  int id = 0, string tableIndex = "", params string[] properties)
+        public static bool InsertProperties(this IInsertProperties insertProperties,  int id = 0, string tableIndex = null, params string[] properties)
         {
             try
             {
                 if (insertProperties == null) return false;
-                string connectionKey = insertProperties.GetConnectionKey();
-                string connectionString = AppSetting.GetConfig(connectionKey);
                 using (IDbConnection dbConnection = insertProperties.GetDBConnection(id))
                 {
                     dbConnection.Open();
@@ -27,7 +26,7 @@ namespace daoextend.daoextend
             { throw ex; }
         }
 
-        public static string GetInsertSql(this IInsertProperties insertProperties,  int id = 0, string tableIndex = "", params string[] properties)
+        public static string GetInsertSql(this IInsertProperties insertProperties,  int id = 0, string tableIndex = null, params string[] properties)
         {
             string result = string.Empty;
             StringBuilder builder = new StringBuilder();
@@ -48,7 +47,7 @@ namespace daoextend.daoextend
                 if (propertiesAll != null)
                     foreach (var property in propertiesAll)
                     {
-                        if (property.IgnoreProperty(insertProperties, id)) continue;
+                        if (property.IgnoreProperty(insertProperties, id)||property.IsPropertyUsedByFrameWork()) continue;
                         string columnName = property.GetPropertyAliasName(id);
                         columnNames.Append(columnName + ",");
                         columnValues.Append("@"+property.Name + ",");

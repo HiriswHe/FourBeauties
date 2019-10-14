@@ -11,7 +11,7 @@ namespace daoextend.daoextend
     public static class TableExtend
     {
 
-        public static string GetTableName(this ICURDProperties updateProperties, string tableIndex ="", int id = 0)
+        public static string GetTableName(this ICURDProperties updateProperties, string tableIndex = null, int id = 0)
         {
             var tableAttribute = updateProperties.GetCustomerAttributes<MatchedTableAttribute>().FirstOrDefault(w => w.ID == id);
             var tableName = tableAttribute?.Name;
@@ -20,11 +20,19 @@ namespace daoextend.daoextend
                 tableName = updateProperties.GetType().Name;
             }
             //tableName = tableName.Trim();//Support Use Sencond Type TableIndex For Table FullName
+            var ITableSharding = updateProperties as ITableSharding;
+            string tableNameFormat = string.Empty;
+            if (ITableSharding != null)
+            {
+                tableNameFormat = string.Format(tableName, ITableSharding.__TableIndex__);
+                if(tableIndex==null)
+                    return tableNameFormat;
+            }
             if (tableName.StartsWith("{") && tableName.EndsWith("}"))
                 tableName = AppSetting.GetConfig(tableName.TrimStart('{').TrimEnd('}'));
             if (tableName.Contains("{") && tableName.Contains("}"))
             {
-                string tableNameFormat = string.Format(tableName, tableIndex);
+                tableNameFormat = string.Format(tableName, tableIndex);
                 return tableNameFormat;
             }
             return tableName;

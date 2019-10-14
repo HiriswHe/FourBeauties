@@ -16,7 +16,7 @@ namespace daoextend.basedao
     public class CURDAllBaseDao<T> where T:ICURDAll
     {
 
-        public virtual void Insert(T po,int id=MatchedID.Insert, string tableIndex = "")
+        public virtual void Insert(T po,int id=MatchedID.Insert, string tableIndex = null)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace daoextend.basedao
             }
         }
 
-        public virtual void DeleteByKey(T po,int id=MatchedID.Delete, string tableIndex ="")
+        public virtual void DeleteByKey(T po,int id=MatchedID.Delete, string tableIndex = null)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace daoextend.basedao
             }
         }
 
-        public virtual void UpdateByKey(T po,int id=MatchedID.Update, string tableIndex = "", params string[] parameters)
+        public virtual void UpdateByKey(T po,int id=MatchedID.Update, string tableIndex = null, params string[] parameters)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace daoextend.basedao
             }
         }
 
-        public virtual List<TDTO> SelectAllByKey<TDTO>(T po,int id=MatchedID.SelectAll,string tableIndex = "")
+        public virtual List<TDTO> SelectAllByKey<TDTO>(T po,int id=MatchedID.SelectAll,string tableIndex = null)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace daoextend.basedao
             }
         }
 
-        public virtual TDTO SelectExists<TDTO>(T po, int id = MatchedID.SelectExists, string tableIndex = "")
+        public virtual TDTO SelectExists<TDTO>(T po, int id = MatchedID.SelectExists, string tableIndex = null)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace daoextend.basedao
             }
         }
 
-        public virtual TDTO SelectSingleByKey<TDTO>(T po,int id=MatchedID.SelectSingle, string tableIndex = "")
+        public virtual TDTO SelectSingleByKey<TDTO>(T po,int id=MatchedID.SelectSingle, string tableIndex = null)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace daoextend.basedao
             }
         }
         
-        public virtual List<TDTO> SelectByIn<TDTO>(T po, int id = MatchedID.SelectIn, string tableIndex = "", params List<object>[] listsIn)
+        public virtual List<TDTO> SelectByIn<TDTO>(T po, int id = MatchedID.SelectIn, string tableIndex = null, params List<object>[] listsIn)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace daoextend.basedao
             }
         }
 
-        public virtual bool DeleteByIn(T po,int id=MatchedID.DeleteIn, string tableIndex = "", params List<object>[] listsIn)
+        public virtual bool DeleteByIn(T po,int id=MatchedID.DeleteIn, string tableIndex = null, params List<object>[] listsIn)
         {
             bool result = false;
             if (listsIn == null || listsIn.Length == 0) return result;
@@ -117,7 +117,7 @@ namespace daoextend.basedao
             return result;
         }
 
-        public virtual bool UpdateByIn(T po, int id = MatchedID.UpdateIn, string tableIndex = "", List<List<object>> listsIn=null,params string[] parameters)
+        public virtual bool UpdateByIn(T po, int id = MatchedID.UpdateIn, string tableIndex = null, List<List<object>> listsIn=null,params string[] parameters)
         {
             bool result = false;
             if (listsIn == null || listsIn.Count == 0) return result;
@@ -147,7 +147,7 @@ namespace daoextend.basedao
             return result;
         }
 
-        public virtual List<TDTO> StatisticByKey<TDTO>(T po, int id = MatchedID.Statistics, string tableIndex = "", List<List<object>> listsIn = null, string sqlAppend = "")
+        public virtual List<TDTO> StatisticByKey<TDTO>(T po, int id = MatchedID.Statistics, string tableIndex = null, List<List<object>> listsIn = null, string sqlAppend = "")
         {
             try
             {
