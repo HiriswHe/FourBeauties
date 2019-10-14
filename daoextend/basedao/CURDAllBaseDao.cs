@@ -16,11 +16,20 @@ namespace daoextend.basedao
     public class CURDAllBaseDao<T> where T:ICURDAll
     {
 
+        public virtual void Sharding(T po,  string tableIndex = null)
+        {
+            var itableSharding = po as ITableSharding;
+            itableSharding.TableSharding(MatchedID.All, tableIndex);
+            var idatabaseSharding = po as IDataBaseSharding;
+            idatabaseSharding.DataBaseSharding(MatchedID.All, tableIndex);
+        }
+
         public virtual void Insert(T po,int id=MatchedID.Insert, string tableIndex = null)
         {
             try
             {
                 if (string.IsNullOrEmpty(po?.UUID)) po.UUID = Guid.NewGuid().ToString("N");
+                Sharding(po, tableIndex);
                 po.InsertProperties(id);
             }
             catch (Exception ex)
@@ -33,6 +42,7 @@ namespace daoextend.basedao
         {
             try
             {
+                Sharding(po, tableIndex);
                 po.DeletePropertiesByKey(id,tableIndex);
             }
             catch (Exception ex)
@@ -45,6 +55,7 @@ namespace daoextend.basedao
         {
             try
             {
+                Sharding(po, tableIndex);
                 po.UpdatePropertiesByKey(id,tableIndex,null,parameters);
             }
             catch (Exception ex)
@@ -57,6 +68,7 @@ namespace daoextend.basedao
         {
             try
             {
+                Sharding(po, tableIndex);
                 return po.SelectPropertiesByKey<TDTO>(id,tableIndex);
             }
             catch (Exception ex)
@@ -69,6 +81,7 @@ namespace daoextend.basedao
         {
             try
             {
+                Sharding(po, tableIndex);
                 return po.SelectPropertiesExists<TDTO>(id,tableIndex).FirstOrDefault();
             }
             catch (Exception ex)
@@ -81,6 +94,7 @@ namespace daoextend.basedao
         {
             try
             {
+                Sharding(po, tableIndex);
                 return po.SelectPropertiesByKey<TDTO>(MatchedID.SelectSingle,tableIndex).FirstOrDefault();
             }
             catch (Exception ex)
@@ -93,6 +107,7 @@ namespace daoextend.basedao
         {
             try
             {
+                Sharding(po, tableIndex);
                 return po.SelectPropertiesByKey<TDTO>(id,tableIndex, listsIn?.ToList());
             }
             catch (Exception ex)
@@ -107,6 +122,7 @@ namespace daoextend.basedao
             if (listsIn == null || listsIn.Length == 0) return result;
             try
             {
+                Sharding(po, tableIndex);
                 po.DeletePropertiesByKey(id,tableIndex, listsIn.ToList());
                 result = true;
             }
@@ -123,6 +139,7 @@ namespace daoextend.basedao
             if (listsIn == null || listsIn.Count == 0) return result;
             try
             {
+                Sharding(po, tableIndex);
                 po.UpdatePropertiesByKey(id,tableIndex, listsIn,parameters);
                 result = true;
             }
@@ -138,7 +155,7 @@ namespace daoextend.basedao
             bool result = false;
             try
             {
-              result=  po.ExecuteNonQuery(sql, parameterrs);
+                result =  po.ExecuteNonQuery(sql, parameterrs);
             }
             catch (Exception ex)
             {
@@ -151,6 +168,7 @@ namespace daoextend.basedao
         {
             try
             {
+                Sharding(po, tableIndex);
                 return po.StatisticsByKey<TDTO>(id,tableIndex, listsIn?.ToList(),sqlAppend);
             }
             catch (Exception ex)

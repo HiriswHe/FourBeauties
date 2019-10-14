@@ -4,7 +4,7 @@ using System.Text;
 
 namespace daoextend.interfaces
 {
-    public interface ITableSharding
+    public interface ITableSharding: ICURDProperties
     {
         string __TableIndex__ { get; set; }
     }

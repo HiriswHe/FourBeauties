@@ -1,4 +1,5 @@
 ﻿using daoextend.consts;
+using daoextend.sharding;
 using FourBeauties.Domain.BO;
 using FourBeauties.Domain.DTO;
 using FourBeauties.Domain.PO;
@@ -14,6 +15,23 @@ namespace FourBeauties
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+
+            #region AutoSharding
+            WorkLineShardingService workLineShardingService = new WorkLineShardingService();
+            WorkLineShardingBO workLineShardingBO = new WorkLineShardingBO
+            { EnterpriseCode = "FourBeauties", FacotryCode = "YangYuHuan", WorkLineCode = "XiShi", WorkLineName = "DiaoChan", WorkShopCode = "WangZhaoJun",
+                WorkLineUUID = Guid.NewGuid().ToString("N") };
+            workLineShardingService.Insert(workLineShardingBO);
+            WorkLineShardingBO workLineShardingBOUpdate = new WorkLineShardingBO { FacotryCode = "JoerYang", WorkLineUUID = workLineShardingBO.WorkLineUUID };
+            workLineShardingService.UpdateByKey(workLineShardingBOUpdate, MatchedID.Update, null, "factory_code");
+            WorkLineShardingBO workLineShardingBOSearch = new WorkLineShardingBO { FacotryCode = "JoerYang", WorkLineUUID = workLineShardingBO.WorkLineUUID };
+            var beauties0 = workLineShardingService.SelectAllByKey<WorkLineShardingDTO,WorkLineShardingVO>(workLineShardingBOSearch);
+            WorkLineShardingBO workLineShardingBOStatistic = new WorkLineShardingBO { WorkLineUUID = workLineShardingBO.WorkLineUUID };
+            var statistics0= workLineShardingService.StatisticByKey<WorkLineShardingPO, WorkLineShardingPO>(workLineShardingBOStatistic);
+            workLineShardingService.DeleteByKey(new WorkLineShardingBO { WorkLineUUID = workLineShardingBO.WorkLineUUID });
+            #endregion
+
+            #region Manual Sharding
             WorkLineService workLineService = new WorkLineService();
             WorkLineBO workLineBO = new WorkLineBO {
                 __DataBaseIndex__="1",__TableIndex__="2",//Support DataBase Sharding And Table Sharding
@@ -36,7 +54,9 @@ namespace FourBeauties
             workLineService.DeleteByKey(new WorkLineBO {
                 __DataBaseIndex__ = "1",__TableIndex__ = "2",//Support DataBase Sharding And Table Sharding
                 WorkLineUUID = workLineBO.WorkLineUUID });
-                Console.ReadKey();
+            #endregion
+
+            Console.ReadKey();
         }
     }
 }
