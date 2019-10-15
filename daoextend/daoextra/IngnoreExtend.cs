@@ -34,6 +34,13 @@ namespace daoextend.daoextend
             return false;
         }
 
+        public static MatchedColumnAttribute MatchedProperty(this PropertyInfo property, object obj, int id = 0)
+        {
+            if (property == null) return null;
+            var matchedColumn = property.GetCustomAttributes(typeof(MatchedColumnAttribute), true)?.Select(w => (MatchedColumnAttribute)w)?.FirstOrDefault(w => w.ID == id);
+            return matchedColumn;
+        }
+
         public static bool IgnoreSelectProperty(this PropertyInfo property, object obj, int id = 0)
         {
             if (property == null) return true;

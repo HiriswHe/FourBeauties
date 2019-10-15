@@ -25,7 +25,8 @@ namespace daoextend.daoextend
                 {
                     dbConnection.Open();
                     var sql = statisticsProperties.GetInSelectSql(id,tableIndex, listsIn, sqlAppend);
-                    return dbConnection.Query<T>(sql, statisticsProperties).ToList();
+                    var value = dbConnection.Query<T>(sql, statisticsProperties).ToList();
+                    return value;
                 }
             }
             catch (Exception ex)

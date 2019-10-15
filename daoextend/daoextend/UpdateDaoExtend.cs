@@ -59,7 +59,10 @@ namespace daoextend.daoextend
                 foreach (var property in properties)
                 {
                     if (property == null) continue;//Ignore Framework Settings Properties
-                    builder.Append(string.Format("{0} = @{0},", property));
+                    if (property.Contains("="))
+                        builder.Append(property+" ");
+                    else
+                        builder.Append(string.Format("{0} = @{0},", property));
                 }
             else
             {
@@ -67,7 +70,8 @@ namespace daoextend.daoextend
                 if (propertiesAll != null)
                     foreach (var property in propertiesAll)
                     {
-                        if (property.IgnoreProperty(updateProperties, id)||property.IsPropertyUsedByFrameWork()) continue;
+                        if (property.IgnoreProperty(updateProperties, id)||property.MatchedProperty(updateProperties,id)!=null//Ignore Matched Column In Where
+                            ||property.IsPropertyUsedByFrameWork()) continue;
                         string columnName = property.GetPropertyAliasName(id);
                         builder.Append(string.Format("{0} = @{1},",columnName, property.Name));
                     }

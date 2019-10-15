@@ -1,15 +1,3 @@
-F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\bin\Debug\netcoreapp2.2\daoextend.deps.json
-F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\bin\Debug\netcoreapp2.2\daoextend.dll
-F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\bin\Debug\netcoreapp2.2\daoextend.pdb
-F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\bin\Debug\netcoreapp2.2\mq.utils.dll
-F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\bin\Debug\netcoreapp2.2\mq.utils.pdb
-F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Debug\netcoreapp2.2\daoextend.csprojAssemblyReference.cache
-F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Debug\netcoreapp2.2\daoextend.csproj.CoreCompileInputs.cache
-F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Debug\netcoreapp2.2\daoextend.AssemblyInfoInputs.cache
-F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Debug\netcoreapp2.2\daoextend.AssemblyInfo.cs
-F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Debug\netcoreapp2.2\daoextend.csproj.CopyComplete
-F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Debug\netcoreapp2.2\daoextend.dll
-F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Debug\netcoreapp2.2\daoextend.pdb
 F:\Work\mtscitech\Pechoin\Git2\api.ms\daoextend\bin\Debug\netcoreapp2.2\daoextend.deps.json
 F:\Work\mtscitech\Pechoin\Git2\api.ms\daoextend\bin\Debug\netcoreapp2.2\daoextend.dll
 F:\Work\mtscitech\Pechoin\Git2\api.ms\daoextend\bin\Debug\netcoreapp2.2\daoextend.pdb
@@ -52,3 +40,11 @@ F:\Work\mtscitech\Pechoin\Git2\api.auth\daoextend\obj\Debug\netcoreapp2.2\daoext
 F:\Work\mtscitech\Pechoin\Git2\api.auth\daoextend\obj\Debug\netcoreapp2.2\daoextend.dll
 F:\Work\mtscitech\Pechoin\Git2\api.auth\daoextend\obj\Debug\netcoreapp2.2\daoextend.pdb
 F:\Work\mtscitech\4Beauties\FourBeauties\daoextend\obj\Debug\netcoreapp2.2\daoextend.csprojAssemblyReference.cache
+F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\bin\Debug\netcoreapp2.2\daoextend.deps.json
+F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\bin\Debug\netcoreapp2.2\daoextend.dll
+F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\bin\Debug\netcoreapp2.2\daoextend.pdb
+F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Debug\netcoreapp2.2\daoextend.csproj.CoreCompileInputs.cache
+F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Debug\netcoreapp2.2\daoextend.AssemblyInfoInputs.cache
+F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Debug\netcoreapp2.2\daoextend.AssemblyInfo.cs
+F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Debug\netcoreapp2.2\daoextend.dll
+F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Debug\netcoreapp2.2\daoextend.pdb

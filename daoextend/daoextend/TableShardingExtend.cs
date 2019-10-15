@@ -20,7 +20,9 @@ namespace daoextend.daoextend
             var algorithm = tableShardingAttribute.ShardingAlgorithm;
             var shardingTotal = tableShardingAttribute.ShardingTotalCount;
             ISharding sharding = Activator.CreateInstance(Type.GetType(algorithm)) as ISharding;
-            tableSharding.__TableIndex__ = sharding.SharingByObject(shardingValues, shardingTotal);
+            var tableIndexSharding = sharding.SharingByObject(shardingValues, shardingTotal);
+            if (!string.IsNullOrEmpty(tableIndexSharding))
+                tableSharding.__TableIndex__ = tableIndexSharding;
         }
 
         public static List<ShardingParameter> GetShardingColumnValues(this ITableSharding tableSharding, int id = MatchedID.All)
