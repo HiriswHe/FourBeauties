@@ -34,5 +34,7 @@ namespace daoextend.consts
         public const string Count = "Count";
         public const string GroupBy = "Group By";
         public const string OrderBy = "Order By";
+        public const string Asc = "Asc";
+        public const string Desc = "Desc";
     }
 }

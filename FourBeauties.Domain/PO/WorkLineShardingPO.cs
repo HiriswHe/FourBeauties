@@ -57,12 +57,16 @@ namespace FourBeauties.Domain.PO
         /// 
         /// </summary>
         [MatchedColumn(ID = MatchedID.SelectAll, IgnoreHashCode = "null")]
+        [Statistics(ID =MatchedID.Statistics,SType = StatisticsType.Footer,Command =Command.OrderBy,CommandExtra =Command.Asc,Sort ="2")]
+        [Statistics(ID = MatchedID.SelectAll, SType = StatisticsType.Footer, Command = Command.OrderBy, CommandExtra = Command.Asc, Sort = "2")]
         public string workline_code { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [MatchedColumn(ID = MatchedID.SelectAll, IgnoreHashCode = "null",ContactNotation ="like")]
+        [Statistics(ID = MatchedID.Statistics, SType = StatisticsType.Footer, Command = Command.OrderBy, CommandExtra = Command.Desc, Sort = "1")]
+        [Statistics(ID = MatchedID.SelectAll, SType = StatisticsType.Footer, Command = Command.OrderBy, CommandExtra = Command.Desc, Sort = "1")]
         public string workline_name { get; set; }
 
         /// <summary>

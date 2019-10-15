@@ -24,7 +24,7 @@ namespace FourBeauties
             workLineShardingService.Insert(workLineShardingBO);
             WorkLineShardingBO workLineShardingBOUpdate = new WorkLineShardingBO { FacotryCode = "JoerYang", WorkLineUUID = workLineShardingBO.WorkLineUUID };
             workLineShardingService.UpdateByKey(workLineShardingBOUpdate, MatchedID.Update, null, "factory_code","workline_code='1'");
-            WorkLineShardingBO workLineShardingBOSearch = new WorkLineShardingBO { FacotryCode = "JoerYang", WorkLineUUID = workLineShardingBO.WorkLineUUID };
+            WorkLineShardingBO workLineShardingBOSearch = new WorkLineShardingBO { FacotryCode = "JoerYang",WorkLineCode= "1",WorkLineName= "DiaoChan", WorkLineUUID = workLineShardingBO.WorkLineUUID };
             var beauties0 = workLineShardingService.SelectAllByKey<WorkLineShardingDTO,WorkLineShardingVO>(workLineShardingBOSearch);
             WorkLineShardingBO workLineShardingBOStatistic = new WorkLineShardingBO { WorkLineUUID = workLineShardingBO.WorkLineUUID };
             var statistics0= workLineShardingService.StatisticByKey<WorkLineShardingPO, WorkLineShardingPO>(workLineShardingBOStatistic);

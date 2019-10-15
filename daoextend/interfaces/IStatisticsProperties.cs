@@ -4,7 +4,7 @@ using System.Text;
 
 namespace daoextend.interfaces
 {
-    public interface IStatisticsProperties : ICURDProperties
+    public interface IStatisticsProperties : ICURDProperties,ISelectProperties
     {
     }
 }

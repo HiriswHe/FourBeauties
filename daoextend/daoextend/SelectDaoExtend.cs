@@ -1,6 +1,8 @@
 ﻿using daoextend.attributes;
 using daoextend.consts;
 using daoextend.daoextra;
+using daoextend.entity;
+using daoextend.enums;
 using daoextend.interfaces;
 using daoextend.log;
 using daoextend.utils;
@@ -105,12 +107,19 @@ namespace daoextend.daoextend
             string result = string.Empty;
             StringBuilder builder = new StringBuilder();
             var selectColumnNames = GetSelectColumnSql(selectProperties, id, properties);
+            var headersAndFooters = selectProperties.GetStatisticHeaderAndFooterSql(id);
+            string header = string.Empty; string footer = string.Empty;
+            if (headersAndFooters.ContainsKey(StatisticsType.Header))
+                header = headersAndFooters[StatisticsType.Header];
+            if (headersAndFooters.ContainsKey(StatisticsType.Footer))
+                footer = headersAndFooters[StatisticsType.Footer];
             var tableName = selectProperties.GetTableName(tableIndex);
             var collectionLimit = selectProperties.GetSelectCollectionLimit(id);
             builder.AppendLine(string.Format("Select {0} {1} From {2} ", collectionLimit, selectColumnNames.ToString(), tableName));
             var matchedKeys = selectProperties.GetInMatchedKeyNameAndValues(id,true,listsIn?.ToArray());
             builder.AppendJoin(" ", matchedKeys);
             builder.AppendLine(sqlAppend);
+            builder.Append(footer);
             result = builder.ToString();
             return result;
         }
@@ -138,6 +147,99 @@ namespace daoextend.daoextend
             if(columnNames.Length>1)
                 columnNames.Length = columnNames.Length - 1;
             return columnNames.ToString();
+        }
+
+        public static Dictionary<StatisticsType, string> GetStatisticHeaderAndFooterSql(this ISelectProperties statisticsProperties, int id = MatchedID.Statistics)
+        {
+            Dictionary<StatisticsType, string> result = new Dictionary<StatisticsType, string>();
+            string headers = string.Empty;
+            string footers = string.Empty;
+            var headersAndFooters = statisticsProperties.GetHeadersAndFooters(id);
+            if (headersAndFooters == null) return result;
+            result.Add(StatisticsType.Header, GetHeaders(headersAndFooters));
+            result.Add(StatisticsType.Footer, GetFooters(headersAndFooters));
+            return result;
+        }
+
+        public static Dictionary<StatisticsType, Dictionary<string, List<StatisticsParameter>>> GetHeadersAndFooters(this ISelectProperties statisticsProperties, int id = MatchedID.Statistics)
+        {
+            Dictionary<StatisticsType, Dictionary<string, List<StatisticsParameter>>> result = new Dictionary<StatisticsType, Dictionary<string, List<StatisticsParameter>>>();
+            var propertiesAll = statisticsProperties.GetType().GetProperties();
+            if (propertiesAll != null)
+                foreach (var property in propertiesAll)
+                {
+                    if (property == null || property.IsPropertyUsedByFrameWork()) continue;
+                    var statisticsAll = property.GetCustomAttributes(typeof(StatisticsAttribute), true)?.Select(w => (StatisticsAttribute)w).Where(w => w.ID == id);
+                    foreach (var statistics in statisticsAll)
+                        if (statistics != null)
+                        {
+                            StatisticsType statisticsType = statistics.SType;
+                            string column = statistics.Column;
+                            string command = statistics.Command;
+                            var extra = statistics.CommandExtra;
+                            var sort = statistics.Sort;
+                            if (!result.ContainsKey(statisticsType)) result.Add(statisticsType, new Dictionary<string, List<StatisticsParameter>>());
+                            if (result.ContainsKey(statisticsType))
+                            {
+                                var valueKey = result[statisticsType];
+                                var columnAliasName = property.Name;                                
+                                if (string.IsNullOrEmpty(column))
+                                    column = property.Name;
+                                if (valueKey == null || !valueKey.ContainsKey(command))
+                                {
+                                    result[statisticsType].Add(command, new List<StatisticsParameter> { new StatisticsParameter {
+                                        CommandText = column+" " + extra,ColumnAliasName= columnAliasName,Sort= sort} });
+                                }
+                                else
+                                {
+                                    result[statisticsType][command].Add(new StatisticsParameter
+                                    {
+                                        CommandText = column + " " + extra,
+                                        ColumnAliasName = columnAliasName,
+                                        Sort = sort
+                                    });
+                                }
+                            }
+                        }
+                }
+            return result;
+        }
+
+        public static string GetHeaders(Dictionary<StatisticsType, Dictionary<string, List<StatisticsParameter>>> dicStatisticsTypeAndCommands)
+        {
+            StringBuilder result = new StringBuilder();
+            if (dicStatisticsTypeAndCommands == null || !dicStatisticsTypeAndCommands.ContainsKey(StatisticsType.Header)) return result.ToString();
+            var keyValuePairs = dicStatisticsTypeAndCommands[StatisticsType.Header];
+            if (keyValuePairs == null || keyValuePairs.Count == 0) return result.ToString();
+            foreach (var key in keyValuePairs.Keys)
+            {
+                var values = keyValuePairs[key];
+                if (values != null)
+                {
+                    foreach (var value in values)
+                        result.AppendFormat(" {0}{1}{2}{3} As {4} ,", key, "(", value.CommandText, ")", value.ColumnAliasName);
+                }
+            }
+            result.Length = result.Length - 1;
+            return result.ToString();
+        }
+
+        public static string GetFooters(Dictionary<StatisticsType, Dictionary<string, List<StatisticsParameter>>> dicStatisticsTypeAndCommands)
+        {
+            StringBuilder result = new StringBuilder();
+            if (dicStatisticsTypeAndCommands == null || !dicStatisticsTypeAndCommands.ContainsKey(StatisticsType.Footer)) return result.ToString();
+            var keyValuePairs = dicStatisticsTypeAndCommands[StatisticsType.Footer];
+            keyValuePairs = keyValuePairs.OrderBy(w => w.Key).ToDictionary(w => w.Key, w => w.Value);
+            if (keyValuePairs == null || keyValuePairs.Count == 0) return result.ToString();
+            foreach (var key in keyValuePairs.Keys)
+            {
+                var values = keyValuePairs[key];
+                if (values != null)
+                {
+                    result.AppendFormat("{0} {1} ", key, string.Join(",", values.OrderBy(w=>w.Sort).Select(w => w.CommandText)));
+                }
+            }
+            return result.ToString();
         }
     }
 }
