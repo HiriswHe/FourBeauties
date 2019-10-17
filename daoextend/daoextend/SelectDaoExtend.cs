@@ -17,6 +17,61 @@ namespace daoextend.daoextend
 {
     public static class SelectDaoExtend
     {
+        public static PageList<T> SelectPageListPropertiesByKey<T>(this ISelectProperties selectProperties,int pageIndex,int pageSize, int id = 0, 
+            string tableIndex = null, List<List<object>> listsIn = null, string sqlAppend = "", params string[] properties)
+        {
+            try
+            {
+                if (selectProperties == null) return default(PageList<T>);
+                string sqlCount = string.Empty;
+                using (IDbConnection dbConnection = selectProperties.GetDBConnection(id))
+                {
+                    dbConnection.Open();
+                    var dbType = selectProperties.GetDBServerType(id);
+                    string sql = string.Empty;
+                    if (dbType == DBServerType.MySql)
+                    {
+                        string sqlPageLimit = string.Format(" Limit {0},{1}", (pageIndex - 1) * pageSize, pageIndex * pageSize);                        
+                        sql = selectProperties.GetInSelectSql(id, tableIndex, listsIn, sqlAppend, properties);                        
+                        sql += sqlPageLimit;
+                    }
+                    else if (dbType == DBServerType.Oracle)
+                    {
+                        string sqlPrepare = selectProperties.GetInSelectSql(id, tableIndex, listsIn, sqlAppend, properties);
+                        sql = string.Format(PageListSql.PageListOracle,sqlPrepare, (pageIndex * pageSize).ToString(), ((pageIndex - 1) * pageSize).ToString());
+                    }
+                    else if (dbType == DBServerType.SqlServer)
+                    {
+                        string sqlPrepare = selectProperties.GetInSqlServerPageListSelectSql(id, tableIndex, listsIn, sqlAppend, properties);
+                        int iOrderBy = sqlPrepare.LastIndexOf("Order By");
+                        string orderBySql = string.Empty;
+                        if (iOrderBy > 0)
+                        {
+                            orderBySql = sqlPrepare.Substring(iOrderBy);
+                            sqlPrepare = sqlPrepare.Substring(0, iOrderBy);
+                        }
+                            sql = string.Format(PageListSql.PageListSqlServer, pageSize.ToString(), sqlPrepare, pageIndex.ToString())+" "+orderBySql;
+                    }
+                    long total = GetTotalCount(selectProperties, dbConnection, id, tableIndex, listsIn, sqlAppend, properties);
+                    var list= dbConnection.Query<T>(sql, selectProperties).ToList();
+                    PageList<T> result = new PageList<T> { ListItems = list, PageIndex = pageIndex, PageSize = pageSize, Total = total };
+                    return result;
+                 }
+            }
+            catch (Exception ex)
+            { throw ex; }
+        }
+        
+        public static long GetTotalCount(this ISelectProperties selectProperties, IDbConnection dbConnection, int id = 0,
+            string tableIndex = null, List<List<object>> listsIn = null, string sqlAppend = "", params string[] properties)
+        {
+            string totalSql = selectProperties.GetCountSql(id, tableIndex, listsIn, sqlAppend, properties);
+            string sTotal = dbConnection.ExecuteScalar(totalSql, selectProperties)?.ToString();
+            long total;
+            long.TryParse(sTotal, out total);
+            return total;
+        }
+
         public static List<T> SelectPropertiesBySql<T>(this ISelectProperties selectProperties, string sql, bool needParameters = false, int id = MatchedID.SelectBySql)
         {
             try
@@ -121,6 +176,45 @@ namespace daoextend.daoextend
             builder.AppendLine(sqlAppend);
             builder.Append(footer);
             result = builder.ToString();
+            return result;
+        }
+
+        public static string GetCountSql(this ISelectProperties selectProperties, int id = 0, string tableIndex = null, List<List<object>> listsIn = null, string sqlAppend = "", params string[] properties)
+        {
+            string result = string.Empty;
+            StringBuilder builder = new StringBuilder();
+            var selectColumnNames = "count(1)";
+            var tableName = selectProperties.GetTableName(tableIndex);
+            builder.AppendLine(string.Format("Select {0} From {1} ", selectColumnNames.ToString(), tableName));
+            var matchedKeys = selectProperties.GetInMatchedKeyNameAndValues(id, true, listsIn?.ToArray());
+            builder.AppendJoin(" ", matchedKeys);
+            builder.AppendLine(sqlAppend);
+            result = builder.ToString();
+            return result;
+        }
+
+        public static string GetInSqlServerPageListSelectSql(this ISelectProperties selectProperties, int id = 0, string tableIndex = null, List<List<object>> listsIn = null, string sqlAppend = "", params string[] properties)
+        {
+            string result = string.Empty;
+            StringBuilder builder = new StringBuilder();
+            var selectColumnNames = GetSelectColumnSql(selectProperties, id, properties);
+            var headersAndFooters = selectProperties.GetStatisticHeaderAndFooterSql(id);
+            string header = string.Empty; string footer = string.Empty;
+            if (headersAndFooters.ContainsKey(StatisticsType.Header))
+                header = headersAndFooters[StatisticsType.Header];
+            if (headersAndFooters.ContainsKey(StatisticsType.Footer))
+                footer = headersAndFooters[StatisticsType.Footer];
+            var tableName = selectProperties.GetTableName(tableIndex);
+            var collectionLimit = selectProperties.GetSelectCollectionLimit(id);
+            var row_number = string.Format(PageListSql.PageListSqlServer1_0, string.IsNullOrEmpty(footer) ? " order by getdate() " : footer);
+            var row_numberColumn = string.Format(PageListSql.PageListSqlServer1, row_number);
+            builder.AppendLine(string.Format("Select {3} {0} {1} From {2} ", collectionLimit, selectColumnNames.ToString(), tableName,row_numberColumn));
+            var matchedKeys = selectProperties.GetInMatchedKeyNameAndValues(id, true, listsIn?.ToArray());
+            builder.AppendJoin(" ", matchedKeys);
+            builder.AppendLine(sqlAppend);
+            builder.Append(footer);
+            result = builder.ToString();
+            //result = string.Format(PageListSql.PageListSqlServer, PageListSql.PageListSqlServerTopSize0, innerSql);
             return result;
         }
 

@@ -1,5 +1,6 @@
 ﻿using daoextend.consts;
 using daoextend.daoextend;
+using daoextend.entity;
 using daoextend.enums;
 using daoextend.interfaces;
 using System;
@@ -77,6 +78,19 @@ namespace daoextend.basedao
             }
         }
 
+        public virtual PageList<TDTO> SelectAllPageListByKey<TDTO>(T po, int pageIndex, int pageSize, int id = MatchedID.SelectAll, string tableIndex = null)
+        {
+            try
+            {
+                Sharding(po, tableIndex);
+                return po.SelectPageListPropertiesByKey<TDTO>(pageIndex,pageSize,id, tableIndex);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public virtual TDTO SelectExists<TDTO>(T po, int id = MatchedID.SelectExists, string tableIndex = null)
         {
             try
@@ -115,6 +129,20 @@ namespace daoextend.basedao
                 throw ex;
             }
         }
+
+        public virtual PageList<TDTO> SelectPageListByIn<TDTO>(T po, int pageIndex, int pageSize, int id = MatchedID.SelectIn, string tableIndex = null, params List<object>[] listsIn)
+        {
+            try
+            {
+                Sharding(po, tableIndex);
+                return po.SelectPageListPropertiesByKey<TDTO>(pageIndex,pageSize, id, tableIndex, listsIn?.ToList());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         public virtual bool DeleteByIn(T po,int id=MatchedID.DeleteIn, string tableIndex = null, params List<object>[] listsIn)
         {

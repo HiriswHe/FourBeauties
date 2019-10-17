@@ -1,4 +1,5 @@
-﻿using daoextend.interfaces;
+﻿using daoextend.daoextra;
+using daoextend.interfaces;
 using daoextend.utils;
 using Dapper;
 using MySql.Data.MySqlClient;

@@ -8,6 +8,7 @@ using Dapper;
 using daoextend.daoextend;
 using System.Linq;
 using daoextend.log;
+using daoextend.daoextra;
 
 namespace daoextend.tansaction
 {

@@ -1,4 +1,5 @@
-﻿using daoextend.dbconnection;
+﻿using daoextend.daoextra;
+using daoextend.dbconnection;
 using daoextend.enums;
 using daoextend.interfaces;
 using daoextend.utils;

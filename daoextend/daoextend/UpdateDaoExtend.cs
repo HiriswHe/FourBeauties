@@ -17,19 +17,6 @@ namespace daoextend.daoextend
 {
     public static class UpdateDaoExtend
     {
-        public static IDbConnection GetDBConnection(this ICURDProperties cURDProperties,int id=0)
-        {
-            var tableAttribute = cURDProperties.GetMatchedTableAttribute();
-            if (tableAttribute == null) throw new Exception("TableAttribute Not Found");
-            DBServerType dBServerType = tableAttribute.DBServerType;
-            string connectionKey = tableAttribute.ConnectionKey;
-            string connectionString = AppSetting.GetConfig(connectionKey);
-            string connectionStringFormat = connectionString;
-            var IDataBaseSharding = cURDProperties as IDataBaseSharding;
-            if (IDataBaseSharding != null) connectionStringFormat = string.Format(connectionString, IDataBaseSharding.__DataBaseIndex__);
-            return DBConnectionFactory.GetDbConnection(connectionStringFormat, dBServerType);
-        }
-
         public static bool UpdatePropertiesByKey(this IUpdateProperties updateProperties,int id=0, string tableIndex = null, List<List<object>> listsIn = null, params string[] properties)
         {
             try

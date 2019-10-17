@@ -12,12 +12,15 @@ namespace FourBeauties
 {
     class Program
     {
+        static WorkLineShardingService workLineShardingService = new WorkLineShardingService();
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
 
+            WorkLineShardingBO workLineShardingBOSearchOracle = new WorkLineShardingBO { FacotryCode = "JoerYang", WorkLineCode = "1", WorkLineName = "DiaoChan", WorkLineUUID = "2" };
+            var beautiesPageListOracle = workLineShardingService.SelecttAllPageLisByKey<WorkLineShardingDTO, WorkLineShardingVO>(workLineShardingBOSearchOracle, 2, 3);
+
             #region AutoSharding
-            WorkLineShardingService workLineShardingService = new WorkLineShardingService();
             WorkLineShardingBO workLineShardingBO = new WorkLineShardingBO
             { EnterpriseCode = "FourBeauties", FacotryCode = "YangYuHuan", WorkLineCode = "XiShi", WorkLineName = "DiaoChan", WorkShopCode = "WangZhaoJun",
                 WorkLineUUID = Guid.NewGuid().ToString("N") };
@@ -26,6 +29,9 @@ namespace FourBeauties
             workLineShardingService.UpdateByKey(workLineShardingBOUpdate, MatchedID.Update, null, "factory_code","workline_code='1'");
             WorkLineShardingBO workLineShardingBOSearch = new WorkLineShardingBO { FacotryCode = "JoerYang",WorkLineCode= "1",WorkLineName= "DiaoChan", WorkLineUUID = workLineShardingBO.WorkLineUUID };
             var beauties0 = workLineShardingService.SelectAllByKey<WorkLineShardingDTO,WorkLineShardingVO>(workLineShardingBOSearch);
+
+            var beautiesPageList = workLineShardingService.SelecttAllPageLisByKey<WorkLineShardingDTO, WorkLineShardingVO>(workLineShardingBOSearch, 2, 3);
+
             WorkLineShardingBO workLineShardingBOStatistic = new WorkLineShardingBO { WorkLineUUID = workLineShardingBO.WorkLineUUID };
             var statistics0= workLineShardingService.StatisticByKey<WorkLineShardingPO, WorkLineShardingPO>(workLineShardingBOStatistic);
             workLineShardingService.DeleteByKey(new WorkLineShardingBO { WorkLineUUID = workLineShardingBO.WorkLineUUID });

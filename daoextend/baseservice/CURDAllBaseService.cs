@@ -1,6 +1,7 @@
 ﻿using daoextend.basedao;
 using daoextend.consts;
 using daoextend.daoextend;
+using daoextend.entity;
 using daoextend.interfaces;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace daoextend.baseservice
             }
             catch (Exception ex)
             {
+                throw ex;
             }
         }
 
@@ -61,6 +63,22 @@ namespace daoextend.baseservice
                 var po = bo.ExplicitToType<TPO>();
                 var dtos = CURDAllBaseDao.SelectAllByKey<TDTO>(po,id,tableIndex);
                 var vos = dtos?.Select(w => w.ExplicitToType<TVO>()).ToList();
+                return vos;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public virtual PageList<TVO> SelecttAllPageLisByKey<TDTO, TVO>(TBO bo, int pageIndex, int pageSize, int id = MatchedID.SelectAll, string tableIndex = null)
+        {
+            try
+            {
+                var po = bo.ExplicitToType<TPO>();
+                var dtos = CURDAllBaseDao.SelectAllPageListByKey<TDTO>(po, pageIndex, pageSize, id, tableIndex);
+                var vos = new PageList<TVO> { PageIndex=dtos.PageIndex,PageSize=dtos.PageSize,Total=dtos.Total };
+                vos.ListItems= dtos?.ListItems?.Select(w => w.ExplicitToType<TVO>()).ToList();
                 return vos;
             }
             catch (Exception ex)
@@ -106,6 +124,22 @@ namespace daoextend.baseservice
                 var po = bo.ExplicitToType<TPO>();
                 var dtos = CURDAllBaseDao.SelectByIn<TDTO>(po,id,tableIndex,listsIn);
                 var vos = dtos?.Select(w => w.ExplicitToType<TVO>()).ToList();
+                return vos;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public virtual PageList<TVO> SelectPageListByIn<TDTO, TVO>(TBO bo, int pageIndex, int pageSize, int id = MatchedID.SelectIn, string tableIndex = null, params List<object>[] listsIn)
+        {
+            try
+            {
+                var po = bo.ExplicitToType<TPO>();
+                var dtos = CURDAllBaseDao.SelectPageListByIn<TDTO>(po,pageIndex,pageSize, id, tableIndex, listsIn);
+                var vos = new PageList<TVO> { PageIndex = dtos.PageIndex, PageSize = dtos.PageSize, Total = dtos.Total };
+                vos.ListItems = dtos?.ListItems ?.Select(w => w.ExplicitToType<TVO>()).ToList();
                 return vos;
             }
             catch (Exception ex)
