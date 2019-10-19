@@ -16,17 +16,18 @@ namespace FourBeauties
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-
-            WorkLineShardingBO workLineShardingBOSearchOracle = new WorkLineShardingBO { FacotryCode = "JoerYang", WorkLineCode = "1", WorkLineName = "DiaoChan", WorkLineUUID = "2" };
-            var beautiesPageListOracle = workLineShardingService.SelecttAllPageLisByKey<WorkLineShardingDTO, WorkLineShardingVO>(workLineShardingBOSearchOracle, 2, 3);
-
+            
             #region AutoSharding
             WorkLineShardingBO workLineShardingBO = new WorkLineShardingBO
             { EnterpriseCode = "FourBeauties", FacotryCode = "YangYuHuan", WorkLineCode = "XiShi", WorkLineName = "DiaoChan", WorkShopCode = "WangZhaoJun",
                 WorkLineUUID = Guid.NewGuid().ToString("N") };
             workLineShardingService.Insert(workLineShardingBO);
+
             WorkLineShardingBO workLineShardingBOUpdate = new WorkLineShardingBO { FacotryCode = "JoerYang", WorkLineUUID = workLineShardingBO.WorkLineUUID };
             workLineShardingService.UpdateByKey(workLineShardingBOUpdate, MatchedID.Update, null, "factory_code","workline_code='1'");
+
+            workLineShardingService.InsertOrUpdate(workLineShardingBO,MatchedID.InsertOrMerge);
+
             WorkLineShardingBO workLineShardingBOSearch = new WorkLineShardingBO { FacotryCode = "JoerYang",WorkLineCode= "1",WorkLineName= "DiaoChan", WorkLineUUID = workLineShardingBO.WorkLineUUID };
             var beauties0 = workLineShardingService.SelectAllByKey<WorkLineShardingDTO,WorkLineShardingVO>(workLineShardingBOSearch);
 
@@ -34,6 +35,7 @@ namespace FourBeauties
 
             WorkLineShardingBO workLineShardingBOStatistic = new WorkLineShardingBO { WorkLineUUID = workLineShardingBO.WorkLineUUID };
             var statistics0= workLineShardingService.StatisticByKey<WorkLineShardingPO, WorkLineShardingPO>(workLineShardingBOStatistic);
+
             workLineShardingService.DeleteByKey(new WorkLineShardingBO { WorkLineUUID = workLineShardingBO.WorkLineUUID });
             #endregion
 

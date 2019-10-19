@@ -30,6 +30,46 @@ namespace daoextend.baseservice
             }
         }
 
+
+        public virtual void InsertOrExistNot(TBO bo, int id = MatchedID.InsertOrUpdate, string tableIndex = null)
+        {
+            try
+            {
+                var po = bo.ExplicitToType<TPO>();
+                CURDAllBaseDao.InsertOrExistNot(po, id, tableIndex);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public virtual void InsertOrUpdate(TBO bo, int id = MatchedID.InsertOrUpdate, string tableIndex = null)
+        {
+            try
+            {
+                var po = bo.ExplicitToType<TPO>();
+                CURDAllBaseDao.InsertOrUpdate(po, id, tableIndex);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public virtual void InsertOrMerge(TBO bo, int id = MatchedID.InsertOrMerge, Func<TPO, TPO, TPO> func = null,bool insertMore=false, string tableIndex = null)
+        {
+            try
+            {
+                var po = bo.ExplicitToType<TPO>();
+                CURDAllBaseDao.InsertOrMerge(po, id, func, insertMore, tableIndex);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public virtual void DeleteByKey(TBO bo,int id=MatchedID.Delete, string tableIndex = null)
         {
             try
@@ -77,7 +117,7 @@ namespace daoextend.baseservice
             {
                 var po = bo.ExplicitToType<TPO>();
                 var dtos = CURDAllBaseDao.SelectAllPageListByKey<TDTO>(po, pageIndex, pageSize, id, tableIndex);
-                var vos = new PageList<TVO> { PageIndex=dtos.PageIndex,PageSize=dtos.PageSize,Total=dtos.Total };
+                var vos = new PageList<TVO> { PageIndex=dtos.PageIndex,PageSize=dtos.PageSize,TotalCount=dtos.TotalCount,TotalPage=dtos.TotalPage };
                 vos.ListItems= dtos?.ListItems?.Select(w => w.ExplicitToType<TVO>()).ToList();
                 return vos;
             }
@@ -138,7 +178,7 @@ namespace daoextend.baseservice
             {
                 var po = bo.ExplicitToType<TPO>();
                 var dtos = CURDAllBaseDao.SelectPageListByIn<TDTO>(po,pageIndex,pageSize, id, tableIndex, listsIn);
-                var vos = new PageList<TVO> { PageIndex = dtos.PageIndex, PageSize = dtos.PageSize, Total = dtos.Total };
+                var vos = new PageList<TVO> { PageIndex = dtos.PageIndex, PageSize = dtos.PageSize, TotalCount = dtos.TotalCount, TotalPage = dtos.TotalPage };
                 vos.ListItems = dtos?.ListItems ?.Select(w => w.ExplicitToType<TVO>()).ToList();
                 return vos;
             }

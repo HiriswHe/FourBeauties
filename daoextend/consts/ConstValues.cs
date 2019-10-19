@@ -21,6 +21,8 @@ namespace daoextend.consts
         public const int DeleteBySql = 11;
         public const int UpdateBySql = 12;
         public const int SelectBySql = 13;
+        public const int InsertOrUpdate = 20;
+        public const int InsertOrMerge = 21;
         public const int Statistics = 88;
         public const int All = 99;
     }

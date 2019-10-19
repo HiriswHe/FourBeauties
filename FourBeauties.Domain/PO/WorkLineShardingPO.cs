@@ -8,7 +8,7 @@ using System.Text;
 
 namespace FourBeauties.Domain.PO
 {
-    [MatchedTable(DBServerType = DBServerType.MySql, ConnectionKey = "ConnectionStrings:pp_test", Name = "workline{0}")]
+    [MatchedTable(DBServerType = DBServerType.MySql, ConnectionKey = "ConnectionStrings:produce", Name = "workline{0}")]
     [DataBaseSharding(DataBaseShardingBegin ="1",DataBaseShardingEnd ="2", ShardingMaxCount = int.MaxValue,
         ShardingAlgorithm = "daoextend.sharding.HashDevideSharding")]
     [TableSharding(TableShardingBegin ="1",TableShardingEnd ="2",ShardingTotalCount =2,
@@ -37,6 +37,8 @@ namespace FourBeauties.Domain.PO
         [MatchedColumn(ID = MatchedID.Delete)]
         [MatchedColumn(ID = MatchedID.Update)]
         [ShardingColumn(Key ="HashKey")]
+        [MatchedColumn(ID =MatchedID.SelectSingle)]
+        [MatchedColumn(ID =MatchedID.InsertOrMerge)]
         public string workline_uuid { get; set; }
 
         /// <summary>

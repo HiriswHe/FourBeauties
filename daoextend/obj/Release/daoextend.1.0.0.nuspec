@@ -14,10 +14,12 @@
         <dependency id="Microsoft.Extensions.Configuration.FileExtensions" version="2.2.0" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.Configuration.Json" version="2.2.0" exclude="Build,Analyzers" />
         <dependency id="MySql.Data" version="6.10.9" exclude="Build,Analyzers" />
+        <dependency id="Oracle.ManagedDataAccess.Core" version="2.19.31" exclude="Build,Analyzers" />
+        <dependency id="log4net" version="2.0.8" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="F:\Work\mtscitech\Pechoin\Git2\panpassmigrationmt\Mt.PanPassMigration\daoextend\bin\Release\netcoreapp2.2\win-x64\daoextend.dll" target="lib\netcoreapp2.2\daoextend.dll" />
+    <file src="F:\Work\mtscitech\Pechoin\Git2\mt.statistics.worker\timerstatisticsrunner\timer.statistics.runner\daoextend\bin\Release\netcoreapp2.2\daoextend.dll" target="lib\netcoreapp2.2\daoextend.dll" />
   </files>
 </package>

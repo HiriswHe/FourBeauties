@@ -39,6 +39,54 @@ namespace daoextend.basedao
             }
         }
 
+        public virtual void InsertOrExistNot(T po, int id = MatchedID.InsertOrUpdate, string tableIndex = null)
+        {
+            try
+            {
+                InsertOrMerge(po, id, null, false,tableIndex);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public virtual void InsertOrUpdate(T po,int id=MatchedID.InsertOrUpdate, string tableIndex =null)
+        {
+            try
+            {
+                InsertOrMerge(po, id, (_old, _new) => { return _new; },false,tableIndex);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public virtual void InsertOrMerge(T po, int id = MatchedID.InsertOrMerge, Func<T, T, T> func=null,bool insertMore=false, string tableIndex = null)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(po?.UUID)) po.UUID = Guid.NewGuid().ToString("N");
+                Sharding(po, tableIndex);
+                var dtoExist = SelectSingleByKey<T>(po, id, tableIndex);
+                if (dtoExist == null) Insert(po, id, tableIndex);
+                else
+                {
+                    if (func == null) return;
+                    var poNew = func.Invoke(dtoExist, po);
+                    if (!insertMore)
+                        UpdateByKey(poNew, id, tableIndex);
+                    else
+                        InsertOrMerge(poNew, id, func, false, tableIndex);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public virtual void DeleteByKey(T po,int id=MatchedID.Delete, string tableIndex = null)
         {
             try

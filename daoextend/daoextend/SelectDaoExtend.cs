@@ -54,7 +54,7 @@ namespace daoextend.daoextend
                     }
                     long total = GetTotalCount(selectProperties, dbConnection, id, tableIndex, listsIn, sqlAppend, properties);
                     var list= dbConnection.Query<T>(sql, selectProperties).ToList();
-                    PageList<T> result = new PageList<T> { ListItems = list, PageIndex = pageIndex, PageSize = pageSize, Total = total };
+                    PageList<T> result = new PageList<T> { ListItems = list, PageIndex = pageIndex, PageSize = pageSize, TotalCount = total, TotalPage = total / pageSize + (total % pageSize == 0 ? 0 : 1) };
                     return result;
                  }
             }

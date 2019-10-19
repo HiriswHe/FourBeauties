@@ -41,3 +41,12 @@ F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Release\netcoreapp2.2\da
 F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Release\netcoreapp2.2\daoextend.AssemblyInfo.cs
 F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Release\netcoreapp2.2\daoextend.dll
 F:\Work\mtscitech\Pechoin\Git2\mq.service\daoextend\obj\Release\netcoreapp2.2\daoextend.pdb
+F:\Work\mtscitech\Pechoin\Git2\mt.statistics.worker\timerstatisticsrunner\timer.statistics.runner\daoextend\bin\Release\netcoreapp2.2\daoextend.deps.json
+F:\Work\mtscitech\Pechoin\Git2\mt.statistics.worker\timerstatisticsrunner\timer.statistics.runner\daoextend\bin\Release\netcoreapp2.2\daoextend.dll
+F:\Work\mtscitech\Pechoin\Git2\mt.statistics.worker\timerstatisticsrunner\timer.statistics.runner\daoextend\bin\Release\netcoreapp2.2\daoextend.pdb
+F:\Work\mtscitech\Pechoin\Git2\mt.statistics.worker\timerstatisticsrunner\timer.statistics.runner\daoextend\obj\Release\netcoreapp2.2\daoextend.csprojAssemblyReference.cache
+F:\Work\mtscitech\Pechoin\Git2\mt.statistics.worker\timerstatisticsrunner\timer.statistics.runner\daoextend\obj\Release\netcoreapp2.2\daoextend.csproj.CoreCompileInputs.cache
+F:\Work\mtscitech\Pechoin\Git2\mt.statistics.worker\timerstatisticsrunner\timer.statistics.runner\daoextend\obj\Release\netcoreapp2.2\daoextend.AssemblyInfoInputs.cache
+F:\Work\mtscitech\Pechoin\Git2\mt.statistics.worker\timerstatisticsrunner\timer.statistics.runner\daoextend\obj\Release\netcoreapp2.2\daoextend.AssemblyInfo.cs
+F:\Work\mtscitech\Pechoin\Git2\mt.statistics.worker\timerstatisticsrunner\timer.statistics.runner\daoextend\obj\Release\netcoreapp2.2\daoextend.dll
+F:\Work\mtscitech\Pechoin\Git2\mt.statistics.worker\timerstatisticsrunner\timer.statistics.runner\daoextend\obj\Release\netcoreapp2.2\daoextend.pdb
