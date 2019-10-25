@@ -157,7 +157,7 @@ namespace daoextend.basedao
             try
             {
                 Sharding(po, tableIndex);
-                return po.SelectPropertiesByKey<TDTO>(MatchedID.SelectSingle,tableIndex).FirstOrDefault();
+                return po.SelectPropertiesByKey<TDTO>(id,tableIndex).FirstOrDefault();
             }
             catch (Exception ex)
             {

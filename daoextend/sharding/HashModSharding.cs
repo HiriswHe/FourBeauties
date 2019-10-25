@@ -14,9 +14,10 @@ namespace daoextend.sharding
         {
             int hashCode = 0;
             string result = string.Empty;
-            object obj = objects?.FirstOrDefault(w=>w.Key=="HashKey");
+            var obj = objects?.FirstOrDefault(w=>w.Key=="HashKey") as ShardingParameter;
             if (obj==null||shardingTotal<=0) return result;
-            hashCode = obj.ToString().HashCode();
+            if (string.IsNullOrEmpty(obj.Value?.ToString())) obj.Value = "";
+            hashCode = obj.Value.ToString().HashCode();
             var abs = Math.Abs(hashCode);
             result = (abs % shardingTotal+1).ToString();
             return result;
