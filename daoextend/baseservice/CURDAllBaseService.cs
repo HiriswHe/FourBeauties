@@ -111,7 +111,7 @@ namespace daoextend.baseservice
             }
         }
 
-        public virtual PageList<TVO> SelecttAllPageLisByKey<TDTO, TVO>(TBO bo, int pageIndex, int pageSize, int id = MatchedID.SelectAll, string tableIndex = null)
+        public virtual PageList<TVO> SelecttAllPageListByKey<TDTO, TVO>(TBO bo, int pageIndex, int pageSize, int id = MatchedID.SelectAll, string tableIndex = null)
         {
             try
             {

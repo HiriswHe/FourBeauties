@@ -31,7 +31,7 @@ namespace daoextend.daoextend
                     string sql = string.Empty;
                     if (dbType == DBServerType.MySql)
                     {
-                        string sqlPageLimit = string.Format(" Limit {0},{1}", (pageIndex - 1) * pageSize, pageIndex * pageSize);                        
+                        string sqlPageLimit = string.Format(" Limit {0},{1}", (pageIndex - 1) * pageSize, pageSize);                        
                         sql = selectProperties.GetInSelectSql(id, tableIndex, listsIn, sqlAppend, properties);                        
                         sql += sqlPageLimit;
                     }
