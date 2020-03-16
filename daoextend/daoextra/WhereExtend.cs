@@ -35,7 +35,7 @@ namespace daoextend.daoextend
             List<string> result = new List<string>();
             if (updateProperties == null) return result;
             var properties = updateProperties.GetType().GetProperties();
-            result.Add(" Where 1=1 ");
+            result.Add(" Where 1=0 ");
             if (properties != null)
                 foreach (var property in properties)
                 {
@@ -62,6 +62,11 @@ namespace daoextend.daoextend
                     }
 
                 }
+            if (result.Count > 1 && !string.IsNullOrEmpty(result[1]))
+            {
+                result[1] = result[1].Replace("And", "Or ( ");
+                result[result.Count - 1] += " ) ";
+            }
             return result;
         }
         public static List<string> GetInMatchedKeyNameAndValues(this ICURDProperties updateProperties, int id = 0,bool ignoreMatched=false, params List<object>[] listsIn)
