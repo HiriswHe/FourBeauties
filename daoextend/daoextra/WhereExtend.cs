@@ -75,10 +75,13 @@ namespace daoextend.daoextend
             if (updateProperties == null) return result;
             var properties = updateProperties.GetType().GetProperties();
             result.Add(" Where 1=0 ");
+            bool hasMatchedColumn = false;
             int i = 0;
             if (properties != null)
                 foreach (var property in properties)
                 {
+                    if (!hasMatchedColumn && property.MatchedProperty(updateProperties, id) != null)
+                        hasMatchedColumn = true;
                     if (!ignoreMatched&& property.IgnoreProperty(updateProperties, id)) continue;
                     if (ignoreMatched && property.IgnoreMatchedProperty(updateProperties, id)) continue;
                     var matchedKeyAttribute = property.GetCustomAttributes(typeof(MatchedKeysAttribute), true).Select(w => w as MatchedKeysAttribute).FirstOrDefault(w => w.ID == id);
@@ -113,6 +116,7 @@ namespace daoextend.daoextend
                     }
 
                 }
+            if(result.Count==1&&hasMatchedColumn) return new List<string>();
             if (result.Count > 1&&!string.IsNullOrEmpty(result[1]))
             {
                 result[1]=result[1].Replace("And", "Or ( ");

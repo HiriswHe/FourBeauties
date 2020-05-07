@@ -56,4 +56,3 @@ F:\Work\mtscitech\Pechoin\Git2\mt.statistics.worker\timerstatisticsrunner\timer.
 F:\Work\mtscitech\Pechoin\Git2\mt.statistics.worker\timerstatisticsrunner\timer.statistics.runner\daoextend\bin\Debug\netcoreapp2.2\daoextend.dll
 F:\Work\mtscitech\Pechoin\Git2\mt.statistics.worker\timerstatisticsrunner\timer.statistics.runner\daoextend\bin\Debug\netcoreapp2.2\daoextend.pdb
 F:\Work\mtscitech\Pechoin\Git2\mt.statistics.worker\timerstatisticsrunner\timer.statistics.runner\daoextend\obj\Debug\netcoreapp2.2\daoextend.csprojAssemblyReference.cache
-F:\Work\mtscitech\4Beauties\FourBeauties\daoextend\obj\Debug\netcoreapp2.2\daoextend.csprojAssemblyReference.cache

@@ -16,8 +16,11 @@ namespace FourBeauties
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            
+
             #region AutoSharding
+            WorkLineShardingBO workLineShardingBOSearchAll = new WorkLineShardingBO { WorkLineUUID =  Guid.NewGuid().ToString("N") };
+            var beautiesAll = workLineShardingService.SelectAllByKey<WorkLineShardingDTO, WorkLineShardingVO>(workLineShardingBOSearchAll);
+
             WorkLineShardingBO workLineShardingBO = new WorkLineShardingBO
             { EnterpriseCode = "FourBeauties", FacotryCode = "YangYuHuan", WorkLineCode = "XiShi", WorkLineName = "DiaoChan", WorkShopCode = "WangZhaoJun",
                 WorkLineUUID = Guid.NewGuid().ToString("N") };
